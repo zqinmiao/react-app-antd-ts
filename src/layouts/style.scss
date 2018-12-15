@@ -1,0 +1,33 @@
+.layout-wrapper {
+  min-height: 100%;
+  .header-top-wrapper {
+    .trigger {
+      float: left;
+      font-size: 18px;
+      line-height: 64px;
+      padding: 0 24px;
+      cursor: pointer;
+      transition: color 0.3s;
+      &:hover {
+        color: #1890ff;
+      }
+    }
+    .dropdown {
+      float: right;
+      margin-right: 15px;
+    }
+  }
+  .sidebar-wrapper {
+    overflow-y: scroll;
+    height: 100vh;
+    -ms-overflow-style: none;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    .search-menu {
+      height: 32px;
+      margin: 16px;
+    }
+  }
+}
