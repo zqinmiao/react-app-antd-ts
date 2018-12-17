@@ -44,7 +44,7 @@ const routes: any[] = [
   {
     title: "关于",
     icon: "appstore",
-    key: "teacher-certify-auth",
+    key: "",
     path: "/about",
     component: About
   },
@@ -58,7 +58,7 @@ const routes: any[] = [
     routes: [
       {
         title: "用户数据",
-        key: "teacher-certify-auth",
+        key: "",
         icon: "appstore",
         path: "/user/bus",
         component: Bus
@@ -92,7 +92,7 @@ const routes: any[] = [
         routes: [
           {
             title: "会员信息",
-            key: "teacher-certify-auth",
+            key: "",
             path: "/users/d/2",
             component: About
           },

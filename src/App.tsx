@@ -1,5 +1,4 @@
 import * as React from "react";
-import { BrowserRouter as Router } from "react-router-dom";
 import Layouts from "src/layouts/index";
 class App extends React.PureComponent {
   public render() {
@@ -11,9 +10,7 @@ class App extends React.PureComponent {
           height: "100%"
         }}
       >
-        <Router>
-          <Layouts />
-        </Router>
+        <Layouts />
       </div>
     );
   }

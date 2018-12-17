@@ -1,6 +1,7 @@
 import { Dropdown, Icon, Layout, Menu } from "antd";
 import * as React from "react";
 import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 import { toggleCollapseds } from "redux/actions/app";
 import BreadcrumbWrapper from "./breadcrumb";
 
@@ -50,7 +51,9 @@ function mapStateToProps(state: any, ownProps: any) {
   return { collapsed: state.app.collapsed, admin: state.app.admin };
 }
 
-export default connect(
-  mapStateToProps,
-  { toggleCollapseds }
-)(HeaderTop);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    { toggleCollapseds }
+  )(HeaderTop)
+);
