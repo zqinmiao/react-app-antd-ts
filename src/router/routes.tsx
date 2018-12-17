@@ -19,17 +19,25 @@ const About = Loadable({
 import Index from "pages/index";
 import User from "pages/user";
 
-const Bus = Loadable({
-  loader: () => import("pages/bus"),
+const Data = Loadable({
+  loader: () => import("pages/data"),
   loading: Loading
 });
 
-function Cart() {
-  return <h3>Cart</h3>;
+function activity() {
+  return <h3>activity</h3>;
 }
 
-function Test() {
-  return <h3>Test</h3>;
+function Setting() {
+  return <h3>Setting</h3>;
+}
+
+function orderly() {
+  return <h3>orderly</h3>;
+}
+
+function unordered() {
+  return <h3>unordered</h3>;
 }
 
 const routes: any[] = [
@@ -43,74 +51,68 @@ const routes: any[] = [
   },
   {
     title: "关于",
-    icon: "appstore",
+    icon: "eye",
     key: "",
     path: "/about",
     component: About
   },
   {
     title: "用户",
-    icon: "bars",
+    icon: "user",
     path: "/user",
     key: "user",
-    redirect: "/user/bus",
+    redirect: "/user/data",
     component: User,
     routes: [
       {
         title: "用户数据",
         key: "",
         icon: "appstore",
-        path: "/user/bus",
-        component: Bus
+        path: "/user/data",
+        component: Data
       },
       {
         title: "用户行为",
         icon: "appstore",
         key: "index",
-        path: "/user/cart",
-        component: Cart
+        path: "/user/activity",
+        component: activity
       }
     ]
   },
   {
-    title: "测试",
-    icon: "appstore",
-    path: "/test",
-    component: Test
+    title: "设置",
+    icon: "setting",
+    path: "/setting",
+    component: Setting
   },
   {
-    title: "会员",
-    icon: "bars",
-    path: "/users",
+    title: "表单",
+    icon: "form",
+    path: "/form",
     component: Wrapper,
     routes: [
       {
-        title: "会员中心",
-        icon: "appstore",
-        path: "/users/d",
+        title: "列表",
+        icon: "bars",
+        path: "/form/list",
         component: Wrapper,
         routes: [
           {
-            title: "会员信息",
+            title: "有序列表",
             key: "",
-            path: "/users/d/2",
-            component: About
+            path: "/form/list/orderly",
+            component: orderly
           },
           {
-            title: "会员活动",
+            title: "无序列表",
             key: "index",
-            path: "/users/d/1",
-            component: Test
+            path: "/form/list/unordered",
+            component: unordered
           }
         ]
       }
     ]
-  },
-  {
-    title: "关于2.0",
-    icon: "appstore",
-    path: "/ddd",
-    component: About
   }
 ];
 export default routes;

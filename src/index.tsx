@@ -59,7 +59,10 @@ function initStoreState(): void {
     return { ...obj, [`${key}`]: item };
   }, {});
   const extractFilterRoutes = extractRouteMap.filter;
-  const menuSelectedOpen = getMenuSelectedAndOpenKeys(extractFilterRoutes);
+  const menuSelectedOpen = getMenuSelectedAndOpenKeys(
+    extractFilterRoutes,
+    breadcrumbMap
+  );
   const selectedKeys = [menuSelectedOpen.selectedKey];
   const openKeys = menuSelectedOpen.openKeys;
   store.dispatch({

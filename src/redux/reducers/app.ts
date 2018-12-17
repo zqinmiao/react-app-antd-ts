@@ -55,7 +55,8 @@ export default function(state = initialState, action: any) {
       // 如果侧边栏展开
       if (!collapsed) {
         const { selectedKey, openKeys } = getMenuSelectedAndOpenKeys(
-          state.extractFilterRoutes
+          state.extractFilterRoutes,
+          state.breadcrumbMap
         );
         return {
           ...state,

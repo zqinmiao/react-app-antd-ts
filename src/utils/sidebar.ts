@@ -37,7 +37,10 @@ export const matchOpenKeys = (selectedKey: string): string[] => {
 };
 
 // 获取选中的菜单和展开的菜单项
-export const getMenuSelectedAndOpenKeys = (extractFilterRoutes: any[]) => {
+export const getMenuSelectedAndOpenKeys = (
+  extractFilterRoutes: any[],
+  breadcrumbMap: any
+) => {
   // 选中的菜单
   let selectedKey: string = location.pathname.replace(/\/$/, "")
     ? location.pathname.replace(/\/$/, "")
@@ -46,23 +49,23 @@ export const getMenuSelectedAndOpenKeys = (extractFilterRoutes: any[]) => {
   // 展开的菜单项
   let openKeys: string[] = [];
 
-  // 查找当前路由是否在路由表中
+  // 查找当前path是否在路由表中
   const findPath = extractFilterRoutes.find((item: any) => {
     return item.path === selectedKey;
   });
-  // 如果不存在，则去查找匹配兄弟路由
+  // 如果不存在，则去查找上层path对应路由是否存在redirect
   if (!findPath) {
-    const selectedKeyArr = selectedKey.split("/");
-    selectedKeyArr.pop();
-    const regStr = selectedKeyArr.join("/");
-    if (regStr) {
-      const regex = new RegExp(`^${regStr}`);
-      const redirectPath = extractFilterRoutes.find((item: any) => {
-        return regex.test(item.path);
-      });
-      if (redirectPath) {
-        selectedKey = redirectPath.path;
-      }
+    // 过滤出所选侧边栏地址的数组
+    const selectedKeyArr = selectedKey.split("/").filter(item => item);
+    console.log(selectedKeyArr);
+
+    // 找到上一层的地址
+    const preIndex =
+      selectedKeyArr.length - 2 > 0 ? selectedKeyArr.length - 2 : 0;
+    const prePath = `/${selectedKeyArr[preIndex]}`;
+
+    if (breadcrumbMap[prePath] && breadcrumbMap[prePath].redirect) {
+      selectedKey = breadcrumbMap[prePath].redirect;
     }
   }
 
@@ -92,8 +95,9 @@ export const extractRoute = (
           title: route.title,
           key: route.key,
           path: route.path,
-          redirect: true,
-          component: route.component
+          redirect: route.redirect,
+          component: route.component,
+          routes: route.routes
         });
         filter.push({
           title: redirectRoute.title,
@@ -108,7 +112,8 @@ export const extractRoute = (
           title: route.title,
           key: route.key,
           path: route.path,
-          component: route.component
+          component: route.component,
+          routes: route.routes
         });
         return extractRoute(route.routes, all, filter);
       }

@@ -51,6 +51,18 @@ class BreadcrumbWrapper extends React.Component<any> {
               </Breadcrumb.Item>
             );
           }
+
+          // 如果存在子route且length大于0
+          if (
+            this.props.breadcrumbMap[url].routes &&
+            this.props.breadcrumbMap[url].routes.length > 0
+          ) {
+            return (
+              <Breadcrumb.Item key={index}>
+                {this.props.breadcrumbMap[url].title}
+              </Breadcrumb.Item>
+            );
+          }
           return (
             <Breadcrumb.Item key={index}>
               <Link to={url}>{this.props.breadcrumbMap[url].title}</Link>
