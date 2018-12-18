@@ -7,10 +7,10 @@ const User = ({ routes }: any) => (
     <h2>Tacos</h2>
     <ul>
       <li>
-        <Link to="/user/data">data</Link>
+        <Link to="/user/data/index">data</Link>
       </li>
       <li>
-        <Link to="/user/activity">activity</Link>
+        <Link to="/user/data/activity">activity</Link>
       </li>
     </ul>
     {routes.map((route: any, i: number) => (

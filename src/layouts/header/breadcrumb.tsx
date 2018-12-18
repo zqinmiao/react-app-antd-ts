@@ -4,10 +4,10 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
 class BreadcrumbWrapper extends React.Component<any> {
-  public shouldComponentUpdate(nextProps: any, nextState: any) {
-    // 由于history.push会导致this.props.location改变两次，从而导致组件重新render两次，所以用以下方式来判断组件是否需要render
-    return this.props.location.pathname !== nextProps.location.pathname;
-  }
+  // public shouldComponentUpdate(nextProps: any, nextState: any) {
+  //   // 由于history.push会导致this.props.location改变两次，从而导致组件重新render两次，所以用以下方式来判断组件是否需要render
+  //   return this.props.location.pathname !== nextProps.location.pathname;
+  // }
 
   public render() {
     console.warn("Render BreadcrumbWrapper");

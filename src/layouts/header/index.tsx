@@ -35,9 +35,7 @@ class HeaderTop extends React.PureComponent<any> {
           <BreadcrumbWrapper {...this.props} />
           <Dropdown className="dropdown" overlay={menu} trigger={["click"]}>
             <span className="ant-dropdown-link" style={{ cursor: "pointer" }}>
-              {`${this.props.admin.admin_name_cn}（${
-                this.props.admin.admin_id
-              }）`}
+              {`${this.props.userInfo.name}（${this.props.userInfo.id}）`}
               <Icon type="down" />
             </span>
           </Dropdown>
@@ -48,7 +46,7 @@ class HeaderTop extends React.PureComponent<any> {
 }
 
 function mapStateToProps(state: any, ownProps: any) {
-  return { collapsed: state.app.collapsed, admin: state.app.admin };
+  return { collapsed: state.app.collapsed, userInfo: state.app.userInfo };
 }
 
 export default withRouter(

@@ -1,5 +1,12 @@
 import * as React from "react";
 
-const Data = () => <h2>Data</h2>;
+class Data extends React.PureComponent {
+  public componentDidMount() {
+    console.log("Data componentDidMount");
+  }
+  public render() {
+    return <h2>Data</h2>;
+  }
+}
 
 export default Data;

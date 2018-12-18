@@ -1,8 +1,7 @@
 import { Icon, Layout, Menu } from "antd";
-import NProgress from "nprogress"; // progress bar
 import * as React from "react";
 import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { toggleMenuOpen, toggleMenuSelect } from "redux/actions/app";
 import SearchMenu from "./search-menu";
 
@@ -37,35 +36,24 @@ class Sidebar extends React.Component<any, State> {
     console.log("Sidebar componentWillUpdate-props", this.props, nextProps);
   }
 
-  public shouldComponentUpdate(nextProps: any, nextState: any) {
-    // 由于history.push会导致this.props改变，从而导致组件重新render，所以用以下方式来判断组件是否需要render
-    return (
-      this.state.openKeys !== nextState.openKeys ||
-      this.state.selectedKey !== nextState.selectedKey ||
-      this.props.collapsed !== nextProps.collapsed ||
-      this.props.selectedKeys[0] !== nextProps.selectedKeys[0]
-    );
-  }
+  // public shouldComponentUpdate(nextProps: any, nextState: any) {
+  //   // 由于history.push会导致this.props改变，从而导致组件重新render，所以用以下方式来判断组件是否需要render
+  //   return (
+  //     this.state.openKeys !== nextState.openKeys ||
+  //     this.state.selectedKey !== nextState.selectedKey ||
+  //     this.props.collapsed !== nextProps.collapsed ||
+  //     this.props.selectedKeys[0] !== nextProps.selectedKeys[0]
+  //   );
+  // }
 
   /**
    * @description 菜单项被选中时调用
    */
   public onSelect = ({ item, key, selectedKeys }: any) => {
     console.log("selectedMenu", item, key, selectedKeys);
-    // const {
-    //   props: { route }
-    // } = item;
-    // 更新state
     this.setState({ selectedKey: key, openKeys: "" });
     // 触发redux中方法派发
     this.props.toggleMenuSelect(selectedKeys);
-
-    /**
-     * 备注：使用push，会导致location信息获取不准确
-     */
-    NProgress.start();
-    this.props.history.push(key);
-    NProgress.done();
   };
 
   /**
@@ -120,13 +108,12 @@ class Sidebar extends React.Component<any, State> {
           {this.props.routes.map((ele: any, index: number) => {
             if (!ele.routes) {
               return (
-                <Menu.Item route={ele} key={`${ele.path}`}>
+                <Menu.Item key={`${ele.path}`}>
                   <span>
                     <Icon type={ele.icon} />
                     {this.props.collapsed ? "" : ele.title}
                   </span>
-                  <div>{ele.title}</div>
-                  {/* <Link to={ele.path}>{ele.title}</Link> */}
+                  <Link to={ele.path}>{ele.title}</Link>
                 </Menu.Item>
               );
             }
@@ -145,12 +132,11 @@ class Sidebar extends React.Component<any, State> {
                     </span>
                   }
                 >
-                  <Menu.Item route={redirect} key={`${redirect.path}`}>
+                  <Menu.Item key={`${redirect.path}`}>
                     <span>
                       <Icon type={redirect.icon} />
-                      {redirect.title}
                     </span>
-                    {/* <Link to={sele.path}>{sele.title}</Link> */}
+                    <Link to={redirect.path}>{redirect.title}</Link>
                   </Menu.Item>
                 </SubMenu>
               );
@@ -167,7 +153,10 @@ class Sidebar extends React.Component<any, State> {
               >
                 {ele.routes.map((sele: any, sindex: number) => {
                   let subMenu;
-                  if (sele.routes && sele.routes.length) {
+                  if (sele.redirect) {
+                    const redirect = sele.routes.find((item: any) => {
+                      return item.path === sele.redirect;
+                    });
                     subMenu = (
                       <SubMenu
                         key={`${sele.path}`}
@@ -178,27 +167,45 @@ class Sidebar extends React.Component<any, State> {
                           </span>
                         }
                       >
-                        {sele.routes.map((mele: any, mindex: number) => {
-                          return (
-                            <Menu.Item route={mele} key={`${mele.path}`}>
-                              {mele.title}
-                              {/* <Link to={mele.path}>{mele.title}</Link> */}
-                            </Menu.Item>
-                          );
-                        })}
+                        <Menu.Item key={`${redirect.path}`}>
+                          <Link to={redirect.path}>{redirect.title}</Link>
+                        </Menu.Item>
                       </SubMenu>
                     );
                   } else {
-                    subMenu = (
-                      <Menu.Item route={sele} key={`${sele.path}`}>
-                        <span>
-                          <Icon type={sele.icon} />
-                          {sele.title}
-                        </span>
-                        {/* <Link to={sele.path}>{sele.title}</Link> */}
-                      </Menu.Item>
-                    );
+                    if (sele.routes && sele.routes.length) {
+                      subMenu = (
+                        <SubMenu
+                          key={`${sele.path}`}
+                          title={
+                            <span>
+                              <Icon type={sele.icon} />
+                              {sele.title}
+                            </span>
+                          }
+                        >
+                          {sele.routes.map((mele: any, mindex: number) => {
+                            return (
+                              <Menu.Item key={`${mele.path}`}>
+                                <Link to={mele.path}>{mele.title}</Link>
+                              </Menu.Item>
+                            );
+                          })}
+                        </SubMenu>
+                      );
+                    } else {
+                      subMenu = (
+                        <Menu.Item key={`${sele.path}`}>
+                          <span>
+                            <Icon type={sele.icon} />
+                            {sele.title}
+                          </span>
+                          <Link to={sele.path}>{sele.title}</Link>
+                        </Menu.Item>
+                      );
+                    }
                   }
+
                   return subMenu;
                 })}
               </SubMenu>

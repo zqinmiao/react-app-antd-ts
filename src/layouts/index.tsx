@@ -1,4 +1,5 @@
 import { Layout } from "antd";
+import login from "pages/login/index";
 import * as React from "react";
 import { connect } from "react-redux";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
@@ -14,48 +15,43 @@ import "src/layouts/style.scss";
 
 const { Content } = Layout;
 
-function NoAuth() {
-  return <h3>403</h3>;
-}
-
 function NotFound() {
   return <h3>404</h3>;
 }
 
 class Layouts extends React.PureComponent<any> {
   public render() {
-    console.warn("Render Layout");
-    const { pathname } = history.location;
-    const filterPathname = pathname.replace(/\/$/, "")
-      ? pathname.replace(/\/$/, "")
-      : "/";
-    console.log(filterPathname);
+    // 判断是否登陆
+    if (!this.props.isLogin) {
+      history.replace("/login");
+    } else {
+      const { pathname } = history.location;
+      const filterPathname = pathname.replace(/\/$/, "")
+        ? pathname.replace(/\/$/, "")
+        : "/";
+      console.log(filterPathname);
 
-    // 查找path地址是否在路由表中
-    const findPath = this.props.extractFilterRoutes.find((item: any) => {
-      return item.path === filterPathname;
-    });
+      // 查找path地址是否在路由表中
+      const findPath = this.props.extractFilterRoutes.find((item: any) => {
+        return item.path === filterPathname;
+      });
 
-    // 如果不存在，则去查找上层path是否存在
-    if (!findPath) {
-      // 过滤出每层path的数组
-      const pathnameArr = filterPathname.split("/").filter(item => item);
-      // 找到上一层path的地址
-      const preIndex = pathnameArr.length - 2 > 0 ? pathnameArr.length - 2 : 0;
-      const prePath = `/${pathnameArr[preIndex]}`;
-
-      // 如果上层path存在且对应的路由存在redirect
+      // 如果未找到且全部路由映射存在
       if (
-        this.props.breadcrumbMap[prePath] &&
-        this.props.breadcrumbMap[prePath].redirect
+        !findPath &&
+        this.props.breadcrumbMap[filterPathname] &&
+        this.props.breadcrumbMap[filterPathname].redirect
       ) {
-        history.push(this.props.breadcrumbMap[prePath].redirect);
-      } else if (filterPathname !== "/403" && filterPathname !== "/404") {
-        history.push("/404");
+        history.push(this.props.breadcrumbMap[filterPathname].redirect);
+      } else if (!this.props.breadcrumbMap[filterPathname]) {
+        // 如果不存在全部路由映射中，则说明无此路由，则跳转到404
+        history.replace("/404");
       }
     }
+    console.warn("Render Layout");
+    console.log(this.props.isLogin);
 
-    return (
+    return this.props.isLogin ? (
       <Router>
         <Layout className="layout-wrapper">
           <Sidebar />
@@ -74,11 +70,16 @@ class Layouts extends React.PureComponent<any> {
                   console.log("Switch-routes-map");
                   return <RouteWithSubRoutes key={i} {...route} />;
                 })}
-                <Route exact={true} path="/403" component={NoAuth} />
-                <Route exact={false} path="/404" component={NotFound} />
+                <Route component={NotFound} />
               </Switch>
             </Content>
           </Layout>
+        </Layout>
+      </Router>
+    ) : (
+      <Router>
+        <Layout className="layout-wrapper">
+          <Route to="/login" component={login} />
         </Layout>
       </Router>
     );
@@ -86,7 +87,9 @@ class Layouts extends React.PureComponent<any> {
 }
 
 function mapStateToProps(state: any, ownProps: any) {
+  console.log(state);
   return {
+    isLogin: state.app.isLogin,
     routes: state.app.routes,
     breadcrumbMap: state.app.breadcrumbMap,
     extractFilterRoutes: state.app.extractFilterRoutes

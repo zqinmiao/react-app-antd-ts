@@ -4,7 +4,7 @@ import { getMenuSelectedAndOpenKeys, matchOpenKeys } from "utils/sidebar";
 const initialState: any = {
   isLogin: false, // 是否登陆
   config: null, // 配置信息
-  admin: null, // 用户信息
+  userInfo: null, // 用户信息
   routes: [], // 路由列表
   extractAllRoutes: [], // 单层全部路由列表
   extractFilterRoutes: [], // 单层过滤后的路由列表
@@ -41,11 +41,12 @@ export default function(state = initialState, action: any) {
 
     // 设置base config
     case "SET_BASE_CONFIG": {
-      const { config, admin_info } = action.payload;
+      const { config, userInfo, isLogin } = action.payload;
       return {
         ...state,
         config,
-        admin: admin_info
+        userInfo,
+        isLogin
       };
     }
 

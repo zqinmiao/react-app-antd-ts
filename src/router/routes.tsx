@@ -61,7 +61,6 @@ const routes: any[] = [
     icon: "user",
     path: "/user",
     key: "user",
-    redirect: "/user/data",
     component: User,
     routes: [
       {
@@ -69,14 +68,30 @@ const routes: any[] = [
         key: "",
         icon: "appstore",
         path: "/user/data",
-        component: Data
+        redirect: "/user/data/index",
+        component: Wrapper,
+        routes: [
+          {
+            title: "用户数据",
+            icon: "appstore",
+            key: "index1",
+            path: "/user/data/index",
+            component: Data
+          },
+          {
+            title: "用户行为",
+            icon: "appstore",
+            key: "index2",
+            path: "/user/data/activity",
+            component: activity
+          }
+        ]
       },
       {
-        title: "用户行为",
+        title: "关于用户",
         icon: "appstore",
-        key: "index",
-        path: "/user/activity",
-        component: activity
+        path: "/user/about",
+        component: About
       }
     ]
   },

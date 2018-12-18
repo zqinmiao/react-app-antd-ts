@@ -53,19 +53,26 @@ export const getMenuSelectedAndOpenKeys = (
   const findPath = extractFilterRoutes.find((item: any) => {
     return item.path === selectedKey;
   });
-  // 如果不存在，则去查找上层path对应路由是否存在redirect
+  // 如果不存在
   if (!findPath) {
-    // 过滤出所选侧边栏地址的数组
-    const selectedKeyArr = selectedKey.split("/").filter(item => item);
-    console.log(selectedKeyArr);
+    // 是否存在redirect
+    if (breadcrumbMap[selectedKey] && breadcrumbMap[selectedKey].redirect) {
+      selectedKey = breadcrumbMap[selectedKey].redirect;
+    } else {
+      // 全部路由映射中是否存在
+      if (breadcrumbMap[selectedKey]) {
+        // 过滤出所选侧边栏地址的数组
+        const selectedKeyArr = selectedKey.split("/").filter(item => item);
 
-    // 找到上一层的地址
-    const preIndex =
-      selectedKeyArr.length - 2 > 0 ? selectedKeyArr.length - 2 : 0;
-    const prePath = `/${selectedKeyArr[preIndex]}`;
+        // 找到上一层的地址
+        const prePath = `/${selectedKeyArr.slice(0, -1).join("/")}`;
 
-    if (breadcrumbMap[prePath] && breadcrumbMap[prePath].redirect) {
-      selectedKey = breadcrumbMap[prePath].redirect;
+        if (breadcrumbMap[prePath] && breadcrumbMap[prePath].redirect) {
+          selectedKey = breadcrumbMap[prePath].redirect;
+        }
+      } else {
+        selectedKey = "";
+      }
     }
   }
 

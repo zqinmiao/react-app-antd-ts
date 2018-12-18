@@ -4,8 +4,10 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import store from "redux/store";
+import { getUserInfo } from "services/api";
 import routes from "src/router/routes";
 import "src/styles/index.scss";
+import { setToken } from "utils/auth";
 import { extractRoute, getMenuSelectedAndOpenKeys } from "utils/sidebar";
 import App from "./App";
 
@@ -34,16 +36,25 @@ async function beforeRender() {
   const config: any = {
     config: {}
   };
-  const adminInfo: any = {
-    admin_info: {
-      admin_name_cn: "zzz",
-      admin_id: "123"
+  const res: any = await getUserInfo(true);
+  console.log(res);
+  const { token, id, avatar, name } = res.data;
+  let isLogin = false;
+  if (res.code === 200) {
+    isLogin = true;
+    setToken(token);
+  }
+  const userInfo: any = {
+    userInfo: {
+      name,
+      id,
+      avatar
     }
   };
   initStoreState();
   store.dispatch({
     type: "SET_BASE_CONFIG",
-    payload: { ...config, ...adminInfo }
+    payload: { ...config, ...userInfo, ...{ isLogin } }
   });
   return;
 }

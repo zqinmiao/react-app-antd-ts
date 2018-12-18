@@ -15,3 +15,9 @@ export const toggleMenuOpen = (openKeys: string[]) => ({
   type: "TOGGLE_MENU_OPEN",
   payload: { openKeys }
 });
+
+// login
+export const login = ({ config, userInfo, isLogin }: any) => ({
+  type: "SET_BASE_CONFIG",
+  payload: { config, userInfo, isLogin }
+});
