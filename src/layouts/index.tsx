@@ -21,12 +21,13 @@ function NotFound() {
 
 class Layouts extends React.PureComponent<any> {
   public render() {
+    let filterPathname = "";
     // 判断是否登陆
     if (!this.props.isLogin) {
       history.replace("/login");
     } else {
       const { pathname } = history.location;
-      const filterPathname = pathname.replace(/\/$/, "")
+      filterPathname = pathname.replace(/\/$/, "")
         ? pathname.replace(/\/$/, "")
         : "/";
       console.log(filterPathname);
@@ -43,7 +44,10 @@ class Layouts extends React.PureComponent<any> {
         this.props.breadcrumbMap[filterPathname].redirect
       ) {
         history.push(this.props.breadcrumbMap[filterPathname].redirect);
-      } else if (!this.props.breadcrumbMap[filterPathname]) {
+      } else if (
+        !this.props.breadcrumbMap[filterPathname] &&
+        filterPathname !== "/login"
+      ) {
         // 如果不存在全部路由映射中，则说明无此路由，则跳转到404
         history.replace("/404");
       }
@@ -51,36 +55,36 @@ class Layouts extends React.PureComponent<any> {
     console.warn("Render Layout");
     console.log(this.props.isLogin);
 
-    return this.props.isLogin ? (
+    return (
       <Router>
-        <Layout className="layout-wrapper">
-          <Sidebar />
-          <Layout>
-            <HeaderTop {...this.props} />
-            <Content
-              style={{
-                margin: "10px 10px",
-                padding: 15,
-                background: "#fff",
-                height: "100%"
-              }}
-            >
-              <Switch>
-                {this.props.routes.map((route: any, i: number) => {
-                  console.log("Switch-routes-map");
-                  return <RouteWithSubRoutes key={i} {...route} />;
-                })}
-                <Route component={NotFound} />
-              </Switch>
-            </Content>
+        {this.props.isLogin && filterPathname !== "/login" ? (
+          <Layout className="layout-wrapper">
+            <Sidebar />
+            <Layout>
+              <HeaderTop {...this.props} />
+              <Content
+                style={{
+                  margin: "10px 10px",
+                  padding: 15,
+                  background: "#fff",
+                  height: "100%"
+                }}
+              >
+                <Switch>
+                  {this.props.routes.map((route: any, i: number) => {
+                    console.log("Switch-routes-map");
+                    return <RouteWithSubRoutes key={i} {...route} />;
+                  })}
+                  <Route component={NotFound} />
+                </Switch>
+              </Content>
+            </Layout>
           </Layout>
-        </Layout>
-      </Router>
-    ) : (
-      <Router>
-        <Layout className="layout-wrapper">
-          <Route to="/login" component={login} />
-        </Layout>
+        ) : (
+          <Layout className="layout-wrapper">
+            <Route path="/login" component={login} />
+          </Layout>
+        )}
       </Router>
     );
   }
