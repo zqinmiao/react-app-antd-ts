@@ -46,7 +46,7 @@ const routes: any[] = [
     icon: "appstore",
     exact: true,
     key: "index",
-    path: "/",
+    path: "/index",
     component: Index
   },
   {
@@ -82,7 +82,7 @@ const routes: any[] = [
             title: "用户行为",
             icon: "appstore",
             key: "index2",
-            path: "/user/data/activity",
+            path: "/user/data/:id",
             component: activity
           }
         ]

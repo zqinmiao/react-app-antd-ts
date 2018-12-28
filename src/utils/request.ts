@@ -1,6 +1,6 @@
 import { message, Modal, notification } from "antd";
 import axios from "axios";
-import { getToken } from "utils/auth";
+import { getToken, removeToken } from "utils/auth";
 
 const confirm = Modal.confirm;
 
@@ -24,21 +24,18 @@ const codeMessage = {
 
 // create an axios instance
 const service = axios.create({
-  baseURL: "/api", // 请求的base_url
+  baseURL: "", // 请求的base_url
   timeout: 30000 // request timeout
 });
 
 // request interceptor
 service.interceptors.request.use(
   config => {
-    // Do something before request is sent
-    config.headers.Authorization = getToken();
+    config.headers.Authorized = getToken();
     return config;
   },
   error => {
-    // Do something with request error
     message.error("请求出错");
-    console.log(error); // for debug
     Promise.reject(error);
   }
 );
@@ -62,9 +59,12 @@ service.interceptors.response.use(
         // antd confirm
         confirm({
           title: "确定登出？",
-          content: "你已被登出，可以取消继续留在该页面，或者重新登录",
+          content: "你已被登出，请点击确认重新登录",
+          okText: "确认",
+          cancelText: "取消",
           onOk() {
-            console.log("确认");
+            removeToken();
+            window.location.reload();
           },
           onCancel() {
             console.log("取消");

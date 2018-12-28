@@ -3,12 +3,12 @@ import { getMenuSelectedAndOpenKeys, matchOpenKeys } from "utils/sidebar";
 // 初始化state
 const initialState: any = {
   isLogin: false, // 是否登陆
-  config: null, // 配置信息
+  firstLink: "/", // 默认跳转的首页
   userInfo: null, // 用户信息
   routes: [], // 路由列表
   extractAllRoutes: [], // 单层全部路由列表
   extractFilterRoutes: [], // 单层过滤后的路由列表
-  breadcrumbMap: null,
+  breadcrumbMap: null, // 单层全部路由映射
   collapsed: false, // 侧边栏是否折叠
   selectedKeys: [], // 菜单选中
   openKeys: "" // 菜单展开项
@@ -20,6 +20,8 @@ export default function(state = initialState, action: any) {
     case "INIT_STATE": {
       const {
         isLogin,
+        userInfo,
+        firstLink,
         routes,
         extractAllRoutes,
         extractFilterRoutes,
@@ -30,23 +32,14 @@ export default function(state = initialState, action: any) {
       return {
         ...state,
         isLogin,
+        userInfo,
+        firstLink,
         routes,
         extractAllRoutes,
         extractFilterRoutes,
         breadcrumbMap,
         selectedKeys,
         openKeys
-      };
-    }
-
-    // 设置base config
-    case "SET_BASE_CONFIG": {
-      const { config, userInfo, isLogin } = action.payload;
-      return {
-        ...state,
-        config,
-        userInfo,
-        isLogin
       };
     }
 
@@ -87,7 +80,6 @@ export default function(state = initialState, action: any) {
     // 触发菜单展开
     case "TOGGLE_MENU_OPEN": {
       const { openKeys } = action.payload;
-      console.log("TOGGLE_MENU_OPEN", openKeys);
       return {
         ...state,
         openKeys

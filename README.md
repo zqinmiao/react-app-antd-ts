@@ -2,9 +2,9 @@
 Based on create-react-app-typescript. Create React apps using antd+typescript.
 
 
-## vscode下配置的代码检查
-* vscode安装扩展 Prettier、tslint
-* 打开settings.json复制以下代码到里面
+## vscode config
+* vscode extension： Prettier、tslint
+* open settings.json edit
 
 ```
 "tslint.autoFixOnSave": true,
@@ -19,8 +19,8 @@ Based on create-react-app-typescript. Create React apps using antd+typescript.
   }
 ```
 
-## 设置文件别名
-在tsconfig.json中设置，如：
+## file alias
+tsconfig.json，For Example：
 
 ```
 "paths": {
@@ -33,9 +33,9 @@ Based on create-react-app-typescript. Create React apps using antd+typescript.
     },
 ```
 
-## 路由配置
+## router config
 
-前端静态路由配置在```src/router/routes.tsx```，路由地址不要以“／”结尾
+router config file```src/router/routes.tsx```，Routing address does not end with "/"
 
 
 ## Build Setup

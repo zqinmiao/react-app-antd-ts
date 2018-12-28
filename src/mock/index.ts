@@ -1,14 +1,11 @@
 import Mock from "mockjs";
 
-Mock.mock(/\/api\/login/, ({ body }: any) => {
+Mock.mock(/\/api\/getUserInfo/, ({ body }: any) => {
   if (body) {
     return {
       code: 200,
       data: {
-        id: 113,
-        token: "admin",
-        avatar:
-          "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif",
+        id: 1,
         name: "Super Admin"
       },
       message: "成功"
@@ -20,6 +17,14 @@ Mock.mock(/\/api\/login/, ({ body }: any) => {
       message: "未登录"
     };
   }
+});
+
+Mock.mock(/\/api\/login/, ({ body }: any) => {
+  return {
+    code: 200,
+    data: {},
+    message: "成功"
+  };
 });
 
 export default Mock;

@@ -36,21 +36,10 @@ class Sidebar extends React.Component<any, State> {
     console.log("Sidebar componentWillUpdate-props", this.props, nextProps);
   }
 
-  // public shouldComponentUpdate(nextProps: any, nextState: any) {
-  //   // 由于history.push会导致this.props改变，从而导致组件重新render，所以用以下方式来判断组件是否需要render
-  //   return (
-  //     this.state.openKeys !== nextState.openKeys ||
-  //     this.state.selectedKey !== nextState.selectedKey ||
-  //     this.props.collapsed !== nextProps.collapsed ||
-  //     this.props.selectedKeys[0] !== nextProps.selectedKeys[0]
-  //   );
-  // }
-
   /**
    * @description 菜单项被选中时调用
    */
   public onSelect = ({ item, key, selectedKeys }: any) => {
-    console.log("selectedMenu", item, key, selectedKeys);
     this.setState({ selectedKey: key, openKeys: "" });
     // 触发redux中方法派发
     this.props.toggleMenuSelect(selectedKeys);
@@ -62,7 +51,6 @@ class Sidebar extends React.Component<any, State> {
   public onOpenChange = (openKeys: string[]) => {
     let resultOpenKeys = [];
 
-    console.log("onOpenChange", openKeys);
     // 判断菜单栏折叠后鼠标hover是否移出菜单，若移出：openKeys为空数组
     if (openKeys.length > 0) {
       // 只有一个子菜单展开
@@ -205,7 +193,6 @@ class Sidebar extends React.Component<any, State> {
                       );
                     }
                   }
-
                   return subMenu;
                 })}
               </SubMenu>

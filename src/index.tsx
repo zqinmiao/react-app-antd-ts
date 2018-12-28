@@ -7,7 +7,7 @@ import store from "redux/store";
 import { getUserInfo } from "services/api";
 import routes from "src/router/routes";
 import "src/styles/index.scss";
-import { setToken } from "utils/auth";
+import { getToken } from "utils/auth";
 import { extractRoute, getMenuSelectedAndOpenKeys } from "utils/sidebar";
 import App from "./App";
 
@@ -33,35 +33,23 @@ beforeRender().then(() => {
 
 // render之前需要做的异步请求：获取配置信息、获取用户信息、生成菜单
 async function beforeRender() {
-  const config: any = {
-    config: {}
-  };
-  const res: any = await getUserInfo(true);
-  console.log(res);
-  const { token, id, avatar, name } = res.data;
   let isLogin = false;
-  if (res.code === 200) {
-    isLogin = true;
-    setToken(token);
-  }
-  const userInfo: any = {
-    userInfo: {
-      name,
-      id,
-      avatar
+  let userInfo = null;
+  const filterPathname = location.pathname.replace(/\/$/, "");
+  if (filterPathname !== "/login" && getToken()) {
+    const {
+      code,
+      data: { id, name }
+    }: any = await getUserInfo(true);
+    if (code === 200) {
+      isLogin = true;
+      userInfo = {
+        name,
+        id
+      };
     }
-  };
-  initStoreState();
-  store.dispatch({
-    type: "SET_BASE_CONFIG",
-    payload: { ...config, ...userInfo, ...{ isLogin } }
-  });
-  return;
-}
+  }
 
-// 初始化redux store state
-function initStoreState(): void {
-  const isLogin = true;
   const extractRouteMap = extractRoute(routes, [], []);
   const extractAllRoutes = extractRouteMap.all;
   // 根据全部展开的路由来获取面包屑映射
@@ -70,6 +58,7 @@ function initStoreState(): void {
     return { ...obj, [`${key}`]: item };
   }, {});
   const extractFilterRoutes = extractRouteMap.filter;
+  const firstLink = extractFilterRoutes[0].path;
   const menuSelectedOpen = getMenuSelectedAndOpenKeys(
     extractFilterRoutes,
     breadcrumbMap
@@ -80,6 +69,8 @@ function initStoreState(): void {
     type: "INIT_STATE",
     payload: {
       isLogin,
+      userInfo,
+      firstLink,
       routes,
       extractAllRoutes,
       extractFilterRoutes,
@@ -88,6 +79,7 @@ function initStoreState(): void {
       openKeys
     }
   });
+  return;
 }
 
 registerServiceWorker();

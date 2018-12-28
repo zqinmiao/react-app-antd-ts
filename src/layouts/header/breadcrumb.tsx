@@ -2,6 +2,7 @@ import { Breadcrumb } from "antd";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+import { matchParamsPath } from "utils/sidebar";
 
 class BreadcrumbWrapper extends React.Component<any> {
   // public shouldComponentUpdate(nextProps: any, nextState: any) {
@@ -18,7 +19,10 @@ class BreadcrumbWrapper extends React.Component<any> {
       : "/";
 
     // 当前打开的路由
-    const targetRoute = this.props.breadcrumbMap[filterPathname];
+    const targetRoute = matchParamsPath(
+      filterPathname,
+      this.props.breadcrumbMap
+    );
 
     if (!targetRoute) {
       return null;
@@ -44,7 +48,10 @@ class BreadcrumbWrapper extends React.Component<any> {
             return false;
           }
           // 如果存在重定向则不需要link
-          if (this.props.breadcrumbMap[url].redirect) {
+          if (
+            this.props.breadcrumbMap[url] &&
+            this.props.breadcrumbMap[url].redirect
+          ) {
             return (
               <Breadcrumb.Item key={index}>
                 {this.props.breadcrumbMap[url].title}

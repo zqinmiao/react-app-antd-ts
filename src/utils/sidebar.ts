@@ -4,6 +4,7 @@
  * @Last Modified by:   mark.zhang
  * @description: 侧边栏相关的方法
  */
+import pathToRegexp from "path-to-regexp";
 
 /**
  * @description 默认匹配菜单的第一个
@@ -36,6 +37,19 @@ export const matchOpenKeys = (selectedKey: string): string[] => {
   return openKeys;
 };
 
+/**
+ * @description 匹配路径（包括动态路径）
+ * @param pathname 路径
+ * @param breadcrumbMap 所有路由映射
+ * @returns 匹配后的路由项
+ */
+export const matchParamsPath = (pathname: string, breadcrumbMap: any) => {
+  const pathKey: any = Object.keys(breadcrumbMap).find(key =>
+    pathToRegexp(key).test(pathname)
+  );
+  return breadcrumbMap[pathKey];
+};
+
 // 获取选中的菜单和展开的菜单项
 export const getMenuSelectedAndOpenKeys = (
   extractFilterRoutes: any[],
@@ -59,8 +73,9 @@ export const getMenuSelectedAndOpenKeys = (
     if (breadcrumbMap[selectedKey] && breadcrumbMap[selectedKey].redirect) {
       selectedKey = breadcrumbMap[selectedKey].redirect;
     } else {
-      // 全部路由映射中是否存在
-      if (breadcrumbMap[selectedKey]) {
+      // 全部路由映射中是否存在(同时对params的path进行判断)
+      const paramsPath = matchParamsPath(selectedKey, breadcrumbMap);
+      if (paramsPath) {
         // 过滤出所选侧边栏地址的数组
         const selectedKeyArr = selectedKey.split("/").filter(item => item);
 
@@ -71,7 +86,11 @@ export const getMenuSelectedAndOpenKeys = (
           selectedKey = breadcrumbMap[prePath].redirect;
         }
       } else {
-        selectedKey = "";
+        if (selectedKey === "/") {
+          selectedKey = extractFilterRoutes[0].path;
+        } else {
+          selectedKey = "/404";
+        }
       }
     }
   }
@@ -92,6 +111,12 @@ export const extractRoute = (
   filter: any[]
 ): any => {
   routeList.forEach((route: any, index: number) => {
+    const itemRoute = {
+      title: route.title,
+      key: route.key,
+      path: route.path,
+      component: route.component
+    };
     if (route.routes && route.routes.length > 0) {
       // 如果存在重定向
       if (route.redirect) {
@@ -99,20 +124,21 @@ export const extractRoute = (
           (item: any) => item.path === route.redirect
         );
         all.push({
-          title: route.title,
-          key: route.key,
-          path: route.path,
-          redirect: route.redirect,
-          component: route.component,
-          routes: route.routes
+          ...itemRoute,
+          ...{
+            redirect: route.redirect,
+            routes: route.routes
+          }
         });
         filter.push({
-          title: redirectRoute.title,
-          key: redirectRoute.key,
-          path: route.redirect,
-          component: redirectRoute.component
+          ...itemRoute,
+          ...{
+            title: redirectRoute.title,
+            key: redirectRoute.key,
+            path: route.redirect,
+            component: redirectRoute.component
+          }
         });
-
         return extractRoute(route.routes, all, filter.slice(0, -1));
       } else {
         all.push({
@@ -125,18 +151,8 @@ export const extractRoute = (
         return extractRoute(route.routes, all, filter);
       }
     } else {
-      all.push({
-        title: route.title,
-        key: route.key,
-        path: route.path,
-        component: route.component
-      });
-      filter.push({
-        title: route.title,
-        key: route.key,
-        path: route.path,
-        component: route.component
-      });
+      all.push(itemRoute);
+      filter.push(itemRoute);
     }
   });
   return { all, filter };

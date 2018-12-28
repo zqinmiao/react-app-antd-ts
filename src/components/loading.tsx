@@ -5,11 +5,14 @@ const Loading = () => {
   return (
     <div
       style={{
-        position: "relative",
+        position: "absolute",
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
         textAlign: "center",
         background: "transparent",
-        borderRadius: 4,
-        height: "100%"
+        borderRadius: 4
       }}
     >
       <Spin
