@@ -2,7 +2,6 @@ import { Layout } from "antd";
 import ScrollToTop from "components/scroll-to-top";
 import NotFind from "pages/exception/index";
 import login from "pages/login/index";
-import pathToRegexp from "path-to-regexp";
 import * as React from "react";
 import { connect } from "react-redux";
 import {
@@ -25,12 +24,6 @@ import "src/layouts/style.scss";
 const { Content } = Layout;
 
 class Layouts extends React.PureComponent<any> {
-  public matchParamsPath = (pathname: string, breadcrumbMap: any) => {
-    const pathKey: any = Object.keys(breadcrumbMap).find(key =>
-      pathToRegexp(key).test(pathname)
-    );
-    return breadcrumbMap[pathKey];
-  };
   public render() {
     let routerComponent = null;
     let filterPathname = "";

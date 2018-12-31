@@ -8,7 +8,8 @@
       "pages/*":["src/pages/*"],
       "utils/*":["src/utils/*"],
       "redux/*":["src/redux/*"],
-      "services/*":["src/services/*"]
+      "services/*":["src/services/*"],
+      "assets/*":["src/assets/*"]
     },
     "module": "esnext",
     "target": "es5",
