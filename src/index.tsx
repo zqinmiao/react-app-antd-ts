@@ -7,6 +7,7 @@ import store from "redux/store";
 import { getUserInfo } from "services/api";
 import routes from "src/router/routes";
 import "src/styles/index.scss";
+import { IBreadcrumbMap, IRoutes } from "types/index";
 import { getToken } from "utils/auth";
 import { extractRoute, getMenuSelectedAndOpenKeys } from "utils/sidebar";
 import App from "./App";
@@ -38,10 +39,12 @@ async function beforeRender() {
   const filterPathname = location.pathname.replace(/\/$/, "");
   if (filterPathname !== "/login" && getToken()) {
     const {
-      code,
-      data: { id, name }
-    }: any = await getUserInfo(true);
-    if (code === 200) {
+      data: {
+        code,
+        result: { name, id }
+      }
+    } = await getUserInfo(true);
+    if (code === 0) {
       isLogin = true;
       userInfo = {
         name,
@@ -53,10 +56,13 @@ async function beforeRender() {
   const extractRouteMap = extractRoute(routes, [], []);
   const extractAllRoutes = extractRouteMap.all;
   // 根据全部展开的路由来获取面包屑映射
-  const breadcrumbMap = extractRouteMap.all.reduce((obj: any, item: any) => {
-    const key = item.path;
-    return { ...obj, [`${key}`]: item };
-  }, {});
+  const breadcrumbMap: IBreadcrumbMap = extractRouteMap.all.reduce(
+    (obj: IBreadcrumbMap, item: IRoutes): IBreadcrumbMap => {
+      const key = item.path;
+      return { ...obj, [`${key}`]: item };
+    },
+    {}
+  );
   const extractFilterRoutes = extractRouteMap.filter;
   const firstLink = extractFilterRoutes[0].path;
   const menuSelectedOpen = getMenuSelectedAndOpenKeys(

@@ -5,13 +5,14 @@
  * @description: 侧边栏相关的方法
  */
 import pathToRegexp from "path-to-regexp";
+import { IBreadcrumbMap, IRoutes } from "types/index";
 
 /**
  * @description 默认匹配菜单的第一个
  * @param route 路由项
  * @param keys 菜单的key值的列表
  */
-const matchSelectedSidebar = (route: any, key = "/"): string => {
+const matchSelectedSidebar = (route: IRoutes, key = "/"): string => {
   if (route.routes && route.routes.length > 0) {
     const list = route.routes;
     key = list[0].path;
@@ -43,55 +44,36 @@ export const matchOpenKeys = (selectedKey: string): string[] => {
  * @param breadcrumbMap 所有路由映射
  * @returns 匹配后的路由项
  */
-export const matchParamsPath = (pathname: string, breadcrumbMap: any) => {
-  const pathKey: any = Object.keys(breadcrumbMap).find(key =>
+export const matchParamsPath = (
+  pathname: string,
+  breadcrumbMap: IBreadcrumbMap
+): IRoutes => {
+  const pathKey: string | undefined = Object.keys(breadcrumbMap).find(key =>
     pathToRegexp(key).test(pathname)
   );
-  return breadcrumbMap[pathKey];
+  return breadcrumbMap[`${pathKey}`];
 };
 
 // 获取选中的菜单和展开的菜单项
 export const getMenuSelectedAndOpenKeys = (
-  extractFilterRoutes: any[],
-  breadcrumbMap: any
+  extractFilterRoutes: IRoutes[],
+  breadcrumbMap: IBreadcrumbMap
 ) => {
+  // 输入的地址
+  const pathname = location.pathname;
   // 选中的菜单
-  let selectedKey: string = location.pathname.replace(/\/$/, "")
-    ? location.pathname.replace(/\/$/, "")
-    : "/";
-
+  let selectedKey: string = "";
   // 展开的菜单项
   let openKeys: string[] = [];
-
-  // 查找当前path是否在路由表中
-  const findPath = extractFilterRoutes.find((item: any) => {
-    return item.path === selectedKey;
-  });
-  // 如果不存在
-  if (!findPath) {
-    // 是否存在redirect
-    if (breadcrumbMap[selectedKey] && breadcrumbMap[selectedKey].redirect) {
-      selectedKey = breadcrumbMap[selectedKey].redirect;
+  if (pathname === "/") {
+    selectedKey = extractFilterRoutes[0].path;
+  } else {
+    // 当前选中的路由
+    const selectedRoute = matchParamsPath(pathname, breadcrumbMap);
+    if (selectedRoute) {
+      selectedKey = selectedRoute.path;
     } else {
-      // 全部路由映射中是否存在(同时对params的path进行判断)
-      const paramsPath = matchParamsPath(selectedKey, breadcrumbMap);
-      if (paramsPath) {
-        // 过滤出所选侧边栏地址的数组
-        const selectedKeyArr = selectedKey.split("/").filter(item => item);
-
-        // 找到上一层的地址
-        const prePath = `/${selectedKeyArr.slice(0, -1).join("/")}`;
-
-        if (breadcrumbMap[prePath] && breadcrumbMap[prePath].redirect) {
-          selectedKey = breadcrumbMap[prePath].redirect;
-        }
-      } else {
-        if (selectedKey === "/") {
-          selectedKey = extractFilterRoutes[0].path;
-        } else {
-          selectedKey = "/404";
-        }
-      }
+      selectedKey = "/404";
     }
   }
 
@@ -102,58 +84,33 @@ export const getMenuSelectedAndOpenKeys = (
 /**
  * @description 提取嵌套路由，变为单层数组
  * @param routeList 路由配置
- * @param all 全部展开的路由列表
- * @param filter 过滤redirect的路由
+ * @param all 全部路由列表
+ * @param filter 过滤的路由
  */
+interface IExtractRouteReturn {
+  all: IRoutes[];
+  filter: IRoutes[];
+}
 export const extractRoute = (
-  routeList: any[],
-  all: any[],
-  filter: any[]
-): any => {
-  routeList.forEach((route: any, index: number) => {
-    const itemRoute = {
-      title: route.title,
-      key: route.key,
-      path: route.path,
-      component: route.component
-    };
-    if (route.routes && route.routes.length > 0) {
-      // 如果存在重定向
-      if (route.redirect) {
-        const redirectRoute = route.routes.find(
-          (item: any) => item.path === route.redirect
-        );
+  routeList: IRoutes[],
+  all: IRoutes[],
+  filter: IRoutes[]
+): IExtractRouteReturn => {
+  routeList.forEach(
+    (route: IRoutes, index: number): void | IExtractRouteReturn => {
+      const itemRoute = {
+        ...route
+      };
+      if (route.routes && route.routes.length > 0) {
         all.push({
-          ...itemRoute,
-          ...{
-            redirect: route.redirect,
-            routes: route.routes
-          }
-        });
-        filter.push({
-          ...itemRoute,
-          ...{
-            title: redirectRoute.title,
-            key: redirectRoute.key,
-            path: route.redirect,
-            component: redirectRoute.component
-          }
-        });
-        return extractRoute(route.routes, all, filter.slice(0, -1));
-      } else {
-        all.push({
-          title: route.title,
-          key: route.key,
-          path: route.path,
-          component: route.component,
-          routes: route.routes
+          ...route
         });
         return extractRoute(route.routes, all, filter);
+      } else {
+        all.push(itemRoute);
+        filter.push(itemRoute);
       }
-    } else {
-      all.push(itemRoute);
-      filter.push(itemRoute);
     }
-  });
+  );
   return { all, filter };
 };

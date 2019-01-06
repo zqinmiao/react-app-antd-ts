@@ -8,6 +8,7 @@
       true,
       2
     ],
+    // "no-any": true,
     // 接口名称不必须加"I"
     // "interface-name": [true, "never-prefix"],
     "jsx-no-lambda": false,

@@ -1,5 +1,9 @@
 import * as React from "react";
 
-const Index = () => <h2>Homerrrrr</h2>;
+class Index extends React.PureComponent {
+  public render() {
+    return <h2>Homerrrrr</h2>;
+  }
+}
 
 export default Index;

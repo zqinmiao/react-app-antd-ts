@@ -1,10 +1,14 @@
 import Mock from "mockjs";
 
-Mock.mock(/\/api\/getUserInfo/, ({ body }: any) => {
+interface IBody<T> {
+  [propName: string]: T;
+}
+
+Mock.mock(/\/api\/getUserInfo/, <T>({ body }: IBody<T>) => {
   if (body) {
     return {
-      code: 200,
-      data: {
+      code: 0,
+      result: {
         id: 1,
         name: "Super Admin"
       },
@@ -13,16 +17,15 @@ Mock.mock(/\/api\/getUserInfo/, ({ body }: any) => {
   } else {
     return {
       code: 401,
-      data: {},
       message: "未登录"
     };
   }
 });
 
-Mock.mock(/\/api\/login/, ({ body }: any) => {
+Mock.mock(/\/api\/login/, <T>({ body }: IBody<T>) => {
   return {
-    code: 200,
-    data: {},
+    code: 0,
+    result: {},
     message: "成功"
   };
 });

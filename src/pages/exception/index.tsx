@@ -1,6 +1,6 @@
 import { Button } from "antd";
+import satellite from "assets/404.svg";
 import * as React from "react";
-import satellite from "src/assets/404.svg";
 import "./style.scss";
 
 export default () => {

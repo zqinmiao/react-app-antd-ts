@@ -1,10 +1,8 @@
 import { Avatar, Dropdown, Icon, Layout, Menu, Modal } from "antd";
 import * as React from "react";
 import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
-import { removeToken } from "utils/auth";
-
 import { toggleCollapseds } from "redux/actions/app";
+import { removeToken } from "utils/auth";
 import BreadcrumbWrapper from "./breadcrumb";
 
 const { Header } = Layout;
@@ -73,13 +71,7 @@ class HeaderTop extends React.PureComponent<any> {
   }
 }
 
-function mapStateToProps(state: any, ownProps: any) {
-  return { collapsed: state.app.collapsed, userInfo: state.app.userInfo };
-}
-
-export default withRouter(
-  connect(
-    mapStateToProps,
-    { toggleCollapseds }
-  )(HeaderTop)
-);
+export default connect(
+  null,
+  { toggleCollapseds }
+)(HeaderTop);

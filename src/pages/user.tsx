@@ -1,8 +1,10 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
 import RouteWithSubRoutes from "src/router/route-with-sub-routes";
+import { IMatch, IRoutes } from "types/index";
 
-const User = ({ routes, match }: any) => {
+const User = ({ match, routes }: { match: IMatch; routes: IRoutes[] }) => {
+  console.log(match);
   return (
     <div>
       <h2>Tacos</h2>
@@ -14,7 +16,7 @@ const User = ({ routes, match }: any) => {
           <Link to="/user/data/activity">activity</Link>
         </li>
       </ul>
-      {routes.map((route: any, i: number) => (
+      {routes.map((route: IRoutes, i: number) => (
         <RouteWithSubRoutes key={i} {...route} />
       ))}
     </div>

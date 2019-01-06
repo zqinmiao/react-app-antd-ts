@@ -1,14 +1,15 @@
 import { Button, Col, Form, Icon, Input } from "antd";
+import { FormComponentProps } from "antd/lib/form";
+import logo from "assets/logo.svg";
 import * as React from "react";
 import Particles from "react-particles-js";
 import { login } from "services/api";
-import logo from "src/assets/logo.svg";
 import { setToken } from "utils/auth";
 import "./style.scss";
 
 const FormItem = Form.Item;
 
-class Login extends React.PureComponent<any> {
+class Login extends React.PureComponent<FormComponentProps> {
   public state = {
     loading: false,
     validateCode: "",
@@ -18,10 +19,10 @@ class Login extends React.PureComponent<any> {
   };
 
   // 提交
-  public handleSubmit = (e: any) => {
+  public handleSubmit = (e: React.SyntheticEvent<HTMLInputElement>) => {
     e.preventDefault();
     this.props.form.validateFields(
-      (err: any, { userName, password, validateCode }: any) => {
+      (err, { userName, password, validateCode }): void => {
         this.setState({
           userNameFeedback: !userName,
           passwordFeedback: !password,
@@ -36,11 +37,12 @@ class Login extends React.PureComponent<any> {
             password,
             validateCode
           })
-            .then((res: any) => {
+            .then(res => {
               this.setState({
                 loading: false
               });
-              if (res.code === 200) {
+              const { code } = res.data;
+              if (code === 0) {
                 setToken("token");
                 window.location.href = "/";
               } else {

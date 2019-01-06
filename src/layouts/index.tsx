@@ -5,89 +5,108 @@ import login from "pages/login/index";
 import * as React from "react";
 import { connect } from "react-redux";
 import {
-  BrowserRouter as Router,
   Redirect,
   Route,
-  Switch
+  RouteComponentProps,
+  Switch,
+  withRouter
 } from "react-router-dom";
 import RouteWithSubRoutes from "src/router/route-with-sub-routes";
+import { IRoutes, IStoreState } from "types/index";
 import { matchParamsPath } from "utils/sidebar";
 import HeaderTop from "./header/index";
 import Sidebar from "./sidebar/index";
 
-import { createBrowserHistory } from "history";
-
-const history = createBrowserHistory();
-
 import "src/layouts/style.scss";
 
-const { Content } = Layout;
+interface ILayoutsProps extends IStoreState, RouteComponentProps {}
 
-class Layouts extends React.PureComponent<any> {
+const { Content } = Layout;
+class Layouts extends React.PureComponent<ILayoutsProps> {
   public render() {
-    let routerComponent = null;
-    let filterPathname = "";
-    const { pathname } = history.location;
-    filterPathname = pathname.replace(/\/$/, "")
-      ? pathname.replace(/\/$/, "")
-      : "/";
+    let renderRoute = {};
+    const { pathname } = this.props.location;
     // 判断是否登陆
     if (!this.props.isLogin) {
-      routerComponent = (
+      renderRoute = (
         <Switch>
           <Route path="/login" component={login} />
           <Redirect to="/login" />
         </Switch>
       );
     } else {
-      // 查找path地址是否在路由表中
-      const findPath = this.props.extractFilterRoutes.find((item: any) => {
-        return item.path === filterPathname;
-      });
+      // 全部路由映射中是否存在(同时对params的path进行判断)
+      const targetRoute = matchParamsPath(pathname, this.props.breadcrumbMap);
+      if (targetRoute) {
+        // 当前路由的地址数组
+        const targetPaths = targetRoute.path
+          .split("/")
+          .filter((i: string) => i);
 
-      // 如果未找到且全部路由映射存在
-      if (!findPath) {
-        if (
-          this.props.breadcrumbMap[filterPathname] &&
-          this.props.breadcrumbMap[filterPathname].redirect
-        ) {
-          routerComponent = (
-            <Redirect to={this.props.breadcrumbMap[filterPathname].redirect} />
-          );
-        } else {
-          // 全部路由映射中是否存在(同时对params的path进行判断)
-          const paramsPath = matchParamsPath(
-            filterPathname,
-            this.props.breadcrumbMap
-          );
-          if (!paramsPath) {
-            if (filterPathname === "/login") {
-              routerComponent = <Route path="/login" component={login} />;
-            } else {
-              if (filterPathname === "/") {
-                routerComponent = (
-                  <Route
-                    exact={true}
-                    path="/"
-                    render={() => <Redirect to={this.props.firstLink} />}
-                  />
-                );
-              } else {
-                if (filterPathname !== "/404") {
-                  history.replace("/404");
-                }
+        // 存在组件的路由项
+        const existComponent: IRoutes[] = [];
+        targetPaths.forEach((key: string, index: number) => {
+          const path = `/${targetPaths.slice(0, index + 1).join("/")}`;
+          const route = this.props.breadcrumbMap[path];
+          if (route && route.component) {
+            existComponent.push(route);
+          }
+        });
+
+        // 重新整理嵌套路由，将无组件的嵌套去除
+        if (existComponent.length > 0) {
+          const routeMap = existComponent.reduceRight(
+            (obj: IRoutes, item: IRoutes, index: number) => {
+              if (existComponent.length - 1 === index) {
+                obj = item;
+                return { ...obj };
               }
+              return { ...item, ...{ routes: [obj] } };
+            },
+            {
+              title: "",
+              path: "",
+              component: null
             }
+          );
+          renderRoute = <RouteWithSubRoutes {...routeMap} />;
+        }
+      } else {
+        // 处理根域、login和404的情况
+        if (/^\/login(\/?)$/.test(pathname)) {
+          renderRoute = <Route path="/login" component={login} />;
+        } else {
+          if (pathname === "/") {
+            renderRoute = (
+              <Route
+                exact={true}
+                path="/"
+                render={() => <Redirect to={this.props.firstLink} />}
+              />
+            );
+          } else {
+            renderRoute = (
+              <Route
+                exact={true}
+                path="/"
+                render={() => <Redirect to="/404" />}
+              />
+            );
           }
         }
       }
     }
     console.warn("Render Layout");
     return (
-      <Router>
-        {this.props.isLogin && filterPathname !== "/login" ? (
+      <div
+        className="app-wrapper"
+        style={{
+          height: "100%"
+        }}
+      >
+        {this.props.isLogin && !/^\/login(\/?)$/.test(pathname) ? (
           <Layout className="layout-wrapper">
-            <Sidebar />
+            <Sidebar {...this.props} />
             <Layout className="layout-box">
               <HeaderTop {...this.props} />
               <Content
@@ -121,10 +140,7 @@ class Layouts extends React.PureComponent<any> {
                   >
                     <ScrollToTop>
                       <Switch>
-                        {this.props.routes.map((route: any, i: number) => {
-                          return <RouteWithSubRoutes key={i} {...route} />;
-                        })}
-                        {routerComponent}
+                        {renderRoute}
                         <Route component={NotFind} />
                       </Switch>
                     </ScrollToTop>
@@ -134,21 +150,26 @@ class Layouts extends React.PureComponent<any> {
             </Layout>
           </Layout>
         ) : (
-          <Layout className="layout-wrapper">{routerComponent}</Layout>
+          <Layout className="layout-wrapper">{renderRoute}</Layout>
         )}
-      </Router>
+      </div>
     );
   }
 }
 
-function mapStateToProps(state: any, ownProps: any) {
+function mapStateToProps({ app }: { app: IStoreState }) {
   return {
-    isLogin: state.app.isLogin,
-    firstLink: state.app.firstLink,
-    routes: state.app.routes,
-    breadcrumbMap: state.app.breadcrumbMap,
-    extractFilterRoutes: state.app.extractFilterRoutes
+    isLogin: app.isLogin,
+    firstLink: app.firstLink,
+    userInfo: app.userInfo,
+    routes: app.routes,
+    extractAllRoutes: app.extractAllRoutes,
+    extractFilterRoutes: app.extractAllRoutes,
+    breadcrumbMap: app.breadcrumbMap,
+    collapsed: app.collapsed,
+    selectedKeys: app.selectedKeys,
+    openKeys: app.openKeys
   };
 }
 
-export default connect(mapStateToProps)(Layouts);
+export default withRouter(connect(mapStateToProps)(Layouts));

@@ -8,7 +8,7 @@
 import Loading from "components/loading";
 import * as React from "react";
 import Loadable from "react-loadable";
-import Wrapper from "./only-wrapper-route";
+import { IRoutes } from "types/index";
 
 // Code Splitting lazy loaded
 const About = Loadable({
@@ -40,19 +40,17 @@ function unordered() {
   return <h3>unordered</h3>;
 }
 
-const routes: any[] = [
+const routes: IRoutes[] = [
   {
     title: "首页",
     icon: "appstore",
     exact: true,
-    key: "index",
     path: "/index",
     component: Index
   },
   {
     title: "关于",
     icon: "eye",
-    key: "",
     path: "/about",
     component: About
   },
@@ -60,29 +58,23 @@ const routes: any[] = [
     title: "用户",
     icon: "user",
     path: "/user",
-    key: "user",
     component: User,
     routes: [
       {
         title: "用户数据",
-        key: "",
         icon: "appstore",
         path: "/user/data",
-        redirect: "/user/data/index",
-        component: Wrapper,
         routes: [
           {
             title: "用户数据",
             icon: "appstore",
-            key: "index1",
             path: "/user/data/index",
             component: Data
           },
           {
             title: "用户行为",
             icon: "appstore",
-            key: "index2",
-            path: "/user/data/:id",
+            path: "/user/data/activity",
             component: activity
           }
         ]
@@ -105,23 +97,19 @@ const routes: any[] = [
     title: "表单",
     icon: "form",
     path: "/form",
-    component: Wrapper,
     routes: [
       {
         title: "列表",
         icon: "bars",
         path: "/form/list",
-        component: Wrapper,
         routes: [
           {
             title: "有序列表",
-            key: "",
             path: "/form/list/orderly",
             component: orderly
           },
           {
             title: "无序列表",
-            key: "index",
             path: "/form/list/unordered",
             component: unordered
           }

@@ -43,19 +43,11 @@ service.interceptors.request.use(
 // response interceptor
 service.interceptors.response.use(
   response => {
-    const {
-      status,
-      data,
-      statusText
-    }: {
-      status: number;
-      data: any;
-      statusText: string;
-    } = response;
+    const { status, data, statusText } = response;
 
     if (status !== 200) {
       // 50008:非法的token; 50012:其他客户端登录了;  50014:Token 过期了;
-      if (data.code === 50008 || data.code === 50012 || data.code === 50014) {
+      if (status === 50008 || status === 50012 || status === 50014) {
         // antd confirm
         confirm({
           title: "确定登出？",
@@ -76,13 +68,18 @@ service.interceptors.response.use(
         message: `请求错误 ${status}`,
         description: errortext
       });
-      return Promise.reject("error");
+      return Promise.reject(response);
     } else {
-      return data;
+      if (data && data.code === 0) {
+        return Promise.resolve(response);
+      } else {
+        message.error(data.message);
+        return Promise.reject(response);
+      }
     }
   },
-  error => {
-    message.error(error.message);
+  <T>(error: T): Promise<T> => {
+    message.error(error);
     return Promise.reject(error);
   }
 );

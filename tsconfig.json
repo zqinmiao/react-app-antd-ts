@@ -9,7 +9,8 @@
       "utils/*":["src/utils/*"],
       "redux/*":["src/redux/*"],
       "services/*":["src/services/*"],
-      "assets/*":["src/assets/*"]
+      "assets/*":["src/assets/*"],
+      "types/*":["src/types/*"]
     },
     "module": "esnext",
     "target": "es5",

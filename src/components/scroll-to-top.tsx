@@ -1,8 +1,8 @@
 import * as React from "react";
-import { withRouter } from "react-router-dom";
+import { RouteComponentProps, withRouter } from "react-router-dom";
 
-class ScrollToTop extends React.PureComponent<any> {
-  public componentDidUpdate(prevProps: any) {
+class ScrollToTop extends React.PureComponent<RouteComponentProps> {
+  public componentDidUpdate(prevProps: RouteComponentProps) {
     if (this.props.location !== prevProps.location) {
       const $mainWrapper = document.querySelector(".main-wrapper");
       if ($mainWrapper) {

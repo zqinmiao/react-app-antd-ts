@@ -1,20 +1,21 @@
+import { IReduxAction, IStoreState } from "types/index";
 import { getMenuSelectedAndOpenKeys, matchOpenKeys } from "utils/sidebar";
 
 // 初始化state
-const initialState: any = {
+const initialState: IStoreState = {
   isLogin: false, // 是否登陆
   firstLink: "/", // 默认跳转的首页
-  userInfo: null, // 用户信息
+  userInfo: {}, // 用户信息
   routes: [], // 路由列表
   extractAllRoutes: [], // 单层全部路由列表
   extractFilterRoutes: [], // 单层过滤后的路由列表
-  breadcrumbMap: null, // 单层全部路由映射
+  breadcrumbMap: {}, // 单层全部路由映射
   collapsed: false, // 侧边栏是否折叠
   selectedKeys: [], // 菜单选中
-  openKeys: "" // 菜单展开项
+  openKeys: [] // 菜单展开项
 };
 
-export default function(state = initialState, action: any) {
+export default function(state = initialState, action: IReduxAction) {
   switch (action.type) {
     // 初始化 state
     case "INIT_STATE": {
