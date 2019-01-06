@@ -9,7 +9,9 @@ const initialState: IStoreState = {
   routes: [], // 路由列表
   extractAllRoutes: [], // 单层全部路由列表
   extractFilterRoutes: [], // 单层过滤后的路由列表
+  searchSidebar: [], // 搜索siderbar的路由表
   breadcrumbMap: {}, // 单层全部路由映射
+  realRouteMap: {}, // 可跳转的路由映射
   collapsed: false, // 侧边栏是否折叠
   selectedKeys: [], // 菜单选中
   openKeys: [] // 菜单展开项
@@ -26,7 +28,9 @@ export default function(state = initialState, action: IReduxAction) {
         routes,
         extractAllRoutes,
         extractFilterRoutes,
+        searchSidebar,
         breadcrumbMap,
+        realRouteMap,
         selectedKeys,
         openKeys
       } = action.payload;
@@ -38,7 +42,9 @@ export default function(state = initialState, action: IReduxAction) {
         routes,
         extractAllRoutes,
         extractFilterRoutes,
+        searchSidebar,
         breadcrumbMap,
+        realRouteMap,
         selectedKeys,
         openKeys
       };

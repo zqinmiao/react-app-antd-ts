@@ -76,7 +76,6 @@ export const getMenuSelectedAndOpenKeys = (
       selectedKey = "/404";
     }
   }
-
   openKeys = matchOpenKeys(selectedKey);
   return { selectedKey, openKeys };
 };
@@ -90,27 +89,35 @@ export const getMenuSelectedAndOpenKeys = (
 interface IExtractRouteReturn {
   all: IRoutes[];
   filter: IRoutes[];
+  searchSidebar: IRoutes[];
 }
 export const extractRoute = (
   routeList: IRoutes[],
   all: IRoutes[],
-  filter: IRoutes[]
+  filter: IRoutes[],
+  searchSidebar: IRoutes[]
 ): IExtractRouteReturn => {
   routeList.forEach(
     (route: IRoutes, index: number): void | IExtractRouteReturn => {
-      const itemRoute = {
-        ...route
-      };
       if (route.routes && route.routes.length > 0) {
         all.push({
           ...route
         });
-        return extractRoute(route.routes, all, filter);
+        return extractRoute(route.routes, all, filter, searchSidebar);
       } else {
-        all.push(itemRoute);
-        filter.push(itemRoute);
+        all.push({
+          ...route
+        });
+        filter.push({
+          ...route
+        });
+        if (!route.noSidebar) {
+          searchSidebar.push({
+            ...route
+          });
+        }
       }
     }
   );
-  return { all, filter };
+  return { all, filter, searchSidebar };
 };

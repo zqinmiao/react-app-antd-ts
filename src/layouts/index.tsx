@@ -36,7 +36,7 @@ class Layouts extends React.PureComponent<ILayoutsProps> {
       );
     } else {
       // 全部路由映射中是否存在(同时对params的path进行判断)
-      const targetRoute = matchParamsPath(pathname, this.props.breadcrumbMap);
+      const targetRoute = matchParamsPath(pathname, this.props.realRouteMap);
       if (targetRoute) {
         // 当前路由的地址数组
         const targetPaths = targetRoute.path
@@ -164,8 +164,10 @@ function mapStateToProps({ app }: { app: IStoreState }) {
     userInfo: app.userInfo,
     routes: app.routes,
     extractAllRoutes: app.extractAllRoutes,
-    extractFilterRoutes: app.extractAllRoutes,
+    extractFilterRoutes: app.extractFilterRoutes,
+    searchSidebar: app.searchSidebar,
     breadcrumbMap: app.breadcrumbMap,
+    realRouteMap: app.realRouteMap,
     collapsed: app.collapsed,
     selectedKeys: app.selectedKeys,
     openKeys: app.openKeys

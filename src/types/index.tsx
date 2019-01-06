@@ -14,6 +14,7 @@ export interface IRoutes {
   path: string;
   exact?: boolean;
   strict?: boolean;
+  noSidebar?: boolean;
   component?: any;
   routes?: IRoutes[];
 }
@@ -34,7 +35,9 @@ export interface IStoreState {
   routes: IRoutes[];
   extractAllRoutes: IRoutes[];
   extractFilterRoutes: IRoutes[];
+  searchSidebar: IRoutes[];
   breadcrumbMap: IBreadcrumbMap;
+  realRouteMap: IBreadcrumbMap;
   collapsed: boolean;
   selectedKeys: string[];
   openKeys: string[];

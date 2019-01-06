@@ -27,7 +27,7 @@ class SearchMenu extends React.PureComponent<any, State> {
   public routes: IRoutes[] = [];
 
   public componentWillMount() {
-    this.routes = this.props.extractFilterRoutes;
+    this.routes = this.props.searchSidebar;
   }
 
   // 触发搜索

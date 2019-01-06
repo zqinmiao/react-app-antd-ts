@@ -74,6 +74,7 @@ const routes: IRoutes[] = [
           {
             title: "用户行为",
             icon: "appstore",
+            noSidebar: true,
             path: "/user/data/activity",
             component: activity
           }

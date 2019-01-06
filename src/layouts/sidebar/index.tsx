@@ -135,7 +135,7 @@ class Sidebar extends React.PureComponent<any, State> {
                         }
                       >
                         {sele.routes.map((mele: IRoutes, mindex: number) => {
-                          return (
+                          return mele.noSidebar ? null : (
                             <Menu.Item key={`${mele.path}`}>
                               <Link to={mele.path}>{mele.title}</Link>
                             </Menu.Item>
@@ -144,15 +144,17 @@ class Sidebar extends React.PureComponent<any, State> {
                       </SubMenu>
                     );
                   } else {
-                    subMenu = (
-                      <Menu.Item key={`${sele.path}`}>
-                        <span>
-                          <Icon type={sele.icon} />
-                          {sele.title}
-                        </span>
-                        <Link to={sele.path}>{sele.title}</Link>
-                      </Menu.Item>
-                    );
+                    if (!sele.noSidebar) {
+                      subMenu = (
+                        <Menu.Item key={`${sele.path}`}>
+                          <span>
+                            <Icon type={sele.icon} />
+                            {sele.title}
+                          </span>
+                          <Link to={sele.path}>{sele.title}</Link>
+                        </Menu.Item>
+                      );
+                    }
                   }
                   return subMenu;
                 })}
