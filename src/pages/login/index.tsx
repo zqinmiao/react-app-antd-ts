@@ -138,6 +138,7 @@ class Login extends React.PureComponent<FormComponentProps> {
               登 录
             </Button>
           </FormItem>
+          <div>账号、密码、验证码，随便填</div>
         </Form>
       </div>
     );

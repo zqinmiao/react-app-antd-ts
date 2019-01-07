@@ -10,7 +10,7 @@ class BreadcrumbWrapper extends React.PureComponent<any> {
     const { pathname } = this.props.location;
 
     // 当前打开的路由
-    const targetRoute = matchParamsPath(pathname, this.props.breadcrumbMap);
+    const targetRoute = matchParamsPath(pathname, this.props.realRouteMap);
 
     if (!targetRoute) {
       return null;
