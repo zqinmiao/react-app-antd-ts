@@ -78,8 +78,8 @@ service.interceptors.response.use(
       }
     }
   },
-  <T>(error: T): Promise<T> => {
-    message.error(error);
+  error => {
+    message.error(error.message);
     return Promise.reject(error);
   }
 );

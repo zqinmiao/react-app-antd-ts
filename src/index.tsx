@@ -1,5 +1,6 @@
 import NProgress from "nprogress"; // progress bar
 import "nprogress/nprogress.css"; // progress bar style
+import Exception from "pages/exception/index";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { Provider } from "react-redux";
@@ -20,15 +21,23 @@ import registerServiceWorker from "./registerServiceWorker";
 NProgress.configure({ showSpinner: false });
 NProgress.start();
 // 查看是否有token
-beforeRender().then(() => {
-  NProgress.done();
-  ReactDOM.render(
-    <Provider store={store}>
-      <App />
-    </Provider>,
-    document.getElementById("root") as HTMLElement
-  );
-});
+beforeRender()
+  .then(() => {
+    NProgress.done();
+    ReactDOM.render(
+      <Provider store={store}>
+        <App />
+      </Provider>,
+      document.getElementById("root") as HTMLElement
+    );
+  })
+  .catch(err => {
+    NProgress.done();
+    ReactDOM.render(
+      <Exception title="" desc="服务器出了点小差错，请等会再来" />,
+      document.getElementById("root") as HTMLElement
+    );
+  });
 
 // mock user info
 

@@ -1,6 +1,6 @@
 import { Layout } from "antd";
 import ScrollToTop from "components/scroll-to-top";
-import NotFind from "pages/exception/index";
+import Exception from "pages/exception/index";
 import login from "pages/login/index";
 import * as React from "react";
 import { connect } from "react-redux";
@@ -141,7 +141,15 @@ class Layouts extends React.PureComponent<ILayoutsProps> {
                     <ScrollToTop>
                       <Switch>
                         {renderRoute}
-                        <Route component={NotFind} />
+                        <Route
+                          render={() => (
+                            <Exception
+                              title="404"
+                              desc="抱歉，你访问的页面不存在"
+                              showAction={true}
+                            />
+                          )}
+                        />
                       </Switch>
                     </ScrollToTop>
                   </div>

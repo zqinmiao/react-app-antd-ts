@@ -3,7 +3,15 @@ import satellite from "assets/404.svg";
 import * as React from "react";
 import "./style.scss";
 
-export default () => {
+export default ({
+  title,
+  desc,
+  showAction
+}: {
+  title: string;
+  desc: string;
+  showAction?: boolean;
+}) => {
   return (
     <div className="exception-wrapper">
       <div className="exception-img">
@@ -13,12 +21,14 @@ export default () => {
         />
       </div>
       <div className="exception-content">
-        <h1 className="exception-content__title">404</h1>
-        <div className="exception-content__desc">抱歉，你访问的页面不存在</div>
+        <h1 className="exception-content__title">{title}</h1>
+        <div className="exception-content__desc">{desc}</div>
         <div className="exception-content__actions">
-          <Button type="primary" href="/">
-            返回首页
-          </Button>
+          {showAction ? (
+            <Button type="primary" href="/">
+              返回首页
+            </Button>
+          ) : null}
         </div>
       </div>
     </div>
