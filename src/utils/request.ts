@@ -42,14 +42,14 @@ service.interceptors.request.use(
 
 // response interceptor
 service.interceptors.response.use(
-  response => {
+  (response): any => {
     const { status, data, statusText } = response;
 
     if (status !== 200) {
       // 50008:非法的token; 50012:其他客户端登录了;  50014:Token 过期了;
       if (status === 50008 || status === 50012 || status === 50014) {
         // antd confirm
-        confirm({
+        return confirm({
           title: "确定登出？",
           content: "你已被登出，请点击确认重新登录",
           okText: "确认",

@@ -23,7 +23,6 @@ NProgress.start();
 // 查看是否有token
 beforeRender()
   .then(() => {
-    NProgress.done();
     ReactDOM.render(
       <Provider store={store}>
         <App />
@@ -32,11 +31,14 @@ beforeRender()
     );
   })
   .catch(err => {
-    NProgress.done();
+    console.log(err);
     ReactDOM.render(
       <Exception title="" desc="服务器出了点小差错，请等会再来" />,
       document.getElementById("root") as HTMLElement
     );
+  })
+  .finally(() => {
+    NProgress.done();
   });
 
 // mock user info

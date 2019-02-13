@@ -38,9 +38,6 @@ class Login extends React.PureComponent<FormComponentProps> {
             validateCode
           })
             .then(res => {
-              this.setState({
-                loading: false
-              });
               const { code } = res.data;
               if (code === 0) {
                 setToken("token");
@@ -49,7 +46,7 @@ class Login extends React.PureComponent<FormComponentProps> {
                 this.refresh();
               }
             })
-            .catch(() => {
+            .finally(() => {
               this.setState({
                 loading: false
               });
