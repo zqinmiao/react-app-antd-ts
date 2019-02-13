@@ -4,7 +4,8 @@ import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { toggleMenuOpen, toggleMenuSelect } from "redux/actions/app";
 import { IRoutes } from "types/index";
-import SearchMenu from "./search-menu";
+// import SearchMenu from "./search-menu";
+import SidebarLogo from "./sidebar-logo";
 
 const { Sider } = Layout;
 const { SubMenu } = Menu;
@@ -89,8 +90,10 @@ class Sidebar extends React.PureComponent<any, State> {
         collapsible={true}
         collapsed={this.props.collapsed}
       >
-        {this.props.collapsed ? null : <SearchMenu {...this.props} />}
+        <SidebarLogo />
+        {/* {this.props.collapsed ? null : <SearchMenu {...this.props} />} */}
         <Menu
+          className="sidebar-menu"
           key="Menu"
           onSelect={this.onSelect}
           onOpenChange={this.onOpenChange}
