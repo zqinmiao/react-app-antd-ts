@@ -87,7 +87,7 @@ class Login extends React.PureComponent<FormComponentProps> {
           <div className="login-top_logo">
             <img src={logo} className="logo" alt="logo" />
           </div>
-          <h3 className="login-top_des">个人管理</h3>
+          <h3 className="login-top_des">Management System</h3>
         </div>
         <Form onSubmit={this.handleSubmit} className="login-form">
           <FormItem>

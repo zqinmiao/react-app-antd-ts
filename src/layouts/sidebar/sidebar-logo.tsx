@@ -7,7 +7,7 @@ class SidebarLogo extends React.PureComponent {
       <div className="sidebar-logo">
         <a href="/">
           <img src={logo} className="logo" alt="logo" />
-          <h1 className="title">个人管理</h1>
+          <h1 className="title">Management System</h1>
         </a>
       </div>
     );
