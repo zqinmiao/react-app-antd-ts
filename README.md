@@ -1,6 +1,8 @@
 # react-app-antd-ts
-Based on create-react-app-typescript. Create React apps using antd+typescript.
+Based on [Create React App Adding TypeScript](https://facebook.github.io/create-react-app/docs/adding-typescript). Create React apps using antd+typescript.
 
+## 相关知识
+[react+typescript+antd脚手架搭建](https://github.com/zqinmiao/blog/issues/7)
 
 ## vscode config
 * vscode extension： Prettier、tslint

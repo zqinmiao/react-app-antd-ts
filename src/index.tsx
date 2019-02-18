@@ -16,7 +16,7 @@ import App from "./App";
 // mock数据
 import "./mock/index";
 
-import registerServiceWorker from "./registerServiceWorker";
+import * as serviceWorker from "./serviceWorker";
 
 NProgress.configure({ showSpinner: false });
 NProgress.start();
@@ -109,4 +109,7 @@ async function beforeRender() {
   return;
 }
 
-registerServiceWorker();
+// If you want your app to work offline and load faster, you can change
+// unregister() to register() below. Note this comes with some pitfalls.
+// Learn more about service workers: http://bit.ly/CRA-PWA
+serviceWorker.unregister();

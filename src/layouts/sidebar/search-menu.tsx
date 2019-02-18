@@ -24,7 +24,7 @@ class SearchMenu extends React.PureComponent<any, State> {
   public readonly state: State = initialState;
 
   // 无嵌套关系的所有路由list
-  public routes: IRoutes[] = [];
+  public routes = [];
 
   public componentWillMount() {
     this.routes = this.props.searchSidebar;
@@ -40,10 +40,7 @@ class SearchMenu extends React.PureComponent<any, State> {
   };
 
   // 处理搜索
-  public querySearch = (
-    queryString: string,
-    cb: (list: IRoutes[]) => void
-  ): void => {
+  public querySearch = (queryString: string, cb: (list: any) => void): void => {
     const restaurants = this.routes;
     const results = queryString
       ? restaurants.filter(createFilter(queryString))
