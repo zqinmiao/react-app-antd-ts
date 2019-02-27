@@ -1,0 +1,30 @@
+{
+  "extends": ["tslint:recommended", "tslint-react", "tslint-config-prettier"],
+  "rules":{
+    "no-console":false,
+    "no-debugger":false,
+    "indent":[true, "spaces", 2], // 缩进
+    "no-consecutive-blank-lines": [// 空行不超过两行
+      true,
+      2
+    ],
+    // "no-any": true,
+    // 接口名称不必须加"I"
+    // "interface-name": [true, "never-prefix"],
+    "jsx-no-lambda": false,
+    // 检查对象中键的排序
+    "object-literal-sort-keys": false,
+    // 倒入（import）源的排序规则
+    "ordered-imports": true
+    // 禁止在项目的package.json中导入未列为依赖项的模块
+    // "no-implicit-dependencies":["optional",["src"]],
+    // 禁止导入任何子模块。
+    // "no-submodule-imports":[true,"src"]
+  },
+  "linterOptions": {
+    "exclude": [
+      "config/**/*.js",
+      "node_modules/**/*.ts"
+    ]
+  }
+}
