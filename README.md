@@ -1,14 +1,14 @@
 # react-app-antd-ts
-Based on [Create React App Adding TypeScript](https://facebook.github.io/create-react-app/docs/adding-typescript). Create React apps using antd+typescript.
+基于 [Create React App Adding TypeScript](https://facebook.github.io/create-react-app/docs/adding-typescript)， 使用antd+typescript创建React应用。
 
 __ps:__ 基于umi脚手架创建，[参考react-app-umi-antd-ts](https://github.com/zqinmiao/react-app-antd-ts/tree/umi-antd-typesrcipt)
 
 ## 相关知识
 [react+typescript+antd脚手架搭建](https://github.com/zqinmiao/blog/issues/7)
 
-## vscode config
-* vscode extension： Prettier、tslint
-* open settings.json edit
+## vscode 配置
+* vscode 插件： Prettier、tslint
+* 打开 settings.json 编辑
 
 ```
 "tslint.autoFixOnSave": true,
@@ -23,8 +23,8 @@ __ps:__ 基于umi脚手架创建，[参考react-app-umi-antd-ts](https://github.
   }
 ```
 
-## file alias
-tsconfig.json，For Example：
+## 文件别名
+tsconfig.json，如下：
 
 ```
 "paths": {
@@ -37,20 +37,7 @@ tsconfig.json，For Example：
     },
 ```
 
-## router config
+## router 配置
 
-router config file```src/router/routes.tsx```，Routing address does not end with "/"
+router 配置文件```src/router/routes.tsx```，路由地址不要以 "/" 结尾。
 
-
-## Build Setup
-
-```
-# install dependencies
-yarn install
-
-# serve with hot reload
-yarn start
-
-# build for production with minification
-yarn build
-```
