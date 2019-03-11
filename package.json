@@ -4,6 +4,7 @@
     "start": "umi dev",
     "build": "umi build && yarn copyfile && yarn cleanfile",
     "test": "umi test",
+    "verify": "serve ./dist",
     "lint:es": "eslint --ext .js src mock tests",
     "lint:ts": "tslint \"src/**/*.ts\" \"src/**/*.tsx\"",
     "precommit": "lint-staged",
