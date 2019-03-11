@@ -1,5 +1,5 @@
 # react-app-umi-antd-ts
-Based on [create-umi-app](https://umijs.org/zh/guide/create-umi-app.html). Create React apps using umi+antd+typescript.
+基于 [create-umi-app](https://umijs.org/zh/guide/create-umi-app.html)， 使用 umi+antd+typescript创建React应用。
 
 ## 相关知识
 [react+typescript+antd脚手架搭建](https://github.com/zqinmiao/blog/issues/7)
@@ -7,9 +7,9 @@ Based on [create-umi-app](https://umijs.org/zh/guide/create-umi-app.html). Creat
 [参考UmiJS官方文档](https://umijs.org/zh/)
 
 
-## vscode config
-* vscode extension： Prettier、tslint
-* open settings.json edit
+## vscode 配置
+* vscode 插件： Prettier、tslint
+* 打开 settings.json 编辑
 
 ```
 "tslint.autoFixOnSave": true,
@@ -24,8 +24,8 @@ Based on [create-umi-app](https://umijs.org/zh/guide/create-umi-app.html). Creat
   }
 ```
 
-## file alias
-tsconfig.json，For Example：
+## 文件别名
+tsconfig.json，如下：
 
 ```
 "paths": {
@@ -33,16 +33,3 @@ tsconfig.json，For Example：
     },
 ```
 
-
-## Build Setup
-
-```
-# install dependencies
-yarn install
-
-# serve with hot reload
-yarn start
-
-# build for production with minification
-yarn build
-```
