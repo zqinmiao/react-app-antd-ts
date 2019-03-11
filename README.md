@@ -1,6 +1,8 @@
 # react-app-antd-ts
 Based on [Create React App Adding TypeScript](https://facebook.github.io/create-react-app/docs/adding-typescript). Create React apps using antd+typescript.
 
+__ps:__ 基于umi脚手架创建，[参考react-app-umi-antd-ts](https://github.com/zqinmiao/react-app-antd-ts/tree/umi-antd-typesrcipt)
+
 ## 相关知识
 [react+typescript+antd脚手架搭建](https://github.com/zqinmiao/blog/issues/7)
 
