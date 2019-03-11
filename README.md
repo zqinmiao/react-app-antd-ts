@@ -1,6 +1,5 @@
 # react-app-umi-antd-ts
-基于umi脚手架创建
-Based on [create-umi-app](https://umijs.org/zh/guide/create-umi-app.html). Create React apps using antd+typescript.
+Based on [create-umi-app](https://umijs.org/zh/guide/create-umi-app.html). Create React apps using umi+antd+typescript.
 
 ## 相关知识
 [react+typescript+antd脚手架搭建](https://github.com/zqinmiao/blog/issues/7)
