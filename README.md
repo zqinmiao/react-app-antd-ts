@@ -1,8 +1,12 @@
-# react-app-antd-ts
-Based on [Create React App Adding TypeScript](https://facebook.github.io/create-react-app/docs/adding-typescript). Create React apps using antd+typescript.
+# react-app-umi-ts
+基于umi脚手架创建
+Based on [create-umi-app](https://umijs.org/zh/guide/create-umi-app.html). Create React apps using antd+typescript.
 
 ## 相关知识
 [react+typescript+antd脚手架搭建](https://github.com/zqinmiao/blog/issues/7)
+
+[参考UmiJS官方文档](https://umijs.org/zh/)
+
 
 ## vscode config
 * vscode extension： Prettier、tslint
@@ -26,18 +30,9 @@ tsconfig.json，For Example：
 
 ```
 "paths": {
-      "src/*": ["src/*"],
-      "components/*":["src/components/*"],
-      "pages/*":["src/pages/*"],
-      "utils/*":["src/utils/*"],
-      "redux/*":["src/redux/*"],
-      "services/*":["src/services/*"]
+      "@/*": ["src/*"]
     },
 ```
-
-## router config
-
-router config file```src/router/routes.tsx```，Routing address does not end with "/"
 
 
 ## Build Setup
