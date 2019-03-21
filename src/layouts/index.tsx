@@ -3,13 +3,13 @@ import * as React from 'react';
 
 import styles from './index.less';
 
-export interface BasicLayoutProps extends React.Props<any> {
+export interface IBasicLayoutProps extends React.Props<any> {
   history?: History;
   location?: Location;
 }
 
 const { Content } = Layout;
-class Layouts extends React.PureComponent<BasicLayoutProps> {
+class Layouts extends React.PureComponent<IBasicLayoutProps> {
   public render() {
     console.warn('Render Layout');
     return (

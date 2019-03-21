@@ -36,10 +36,17 @@ export default {
       dll: false,
       routes: {
         exclude: [
-        
           /components\//,
         ],
       },
     }],
+  ],
+  routes: [
+    { path: '/', component: '../layouts/index',
+    routes: [
+        { path: '', component: './index' },
+      ]
+    },
+    { path: '/test', component: './economy',Routes: ['./routes/PrivateRoute.js'] }
   ],
 }
