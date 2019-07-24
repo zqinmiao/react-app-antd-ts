@@ -26,9 +26,16 @@ class SearchMenu extends React.PureComponent<any, State> {
   // 无嵌套关系的所有路由list
   public routes = [];
 
-  public componentWillMount() {
+  constructor(props:any){
+    super(props);
     this.routes = this.props.searchSidebar;
   }
+
+  /**
+   * 次生命周期在React v16.3.0版本后将废弃componentWillMount、componentWillReceiveProps 以及 componentWillUpdate 三个周期函数
+   */
+  // public componentWillMount() {
+  // }
 
   // 触发搜索
   public handleSearch = (value: string) => {

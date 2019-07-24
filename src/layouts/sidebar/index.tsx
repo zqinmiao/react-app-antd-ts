@@ -20,23 +20,30 @@ class Sidebar extends React.PureComponent<any, State> {
   public readonly state: State = initialState;
   public rootSubmenuKeys: string[] = [];
 
-  /**
-   * @description 组件将要挂载
-   */
-  public componentWillMount() {
-    console.log("Sidebar componentWillMount", this.props);
-    // 获取根Submenu的key
+  constructor(props:any){
+    super(props);
+  // 获取根Submenu的key
     this.rootSubmenuKeys = this.props.routes.map(
       (item: IRoutes, index: number) => `${item.path}`
     );
   }
 
   /**
+   * 此生命周期在React v16.3.0版本后将废弃componentWillMount、componentWillReceiveProps 以及 componentWillUpdate 三个周期函数
+   * @description 组件将要挂载
+   */
+  // public componentWillMount() {
+  //   console.log("Sidebar componentWillMount", this.props);
+    
+  // }
+
+  /**
+   * 此生命周期在React v16.3.0版本后将废弃componentWillMount、componentWillReceiveProps 以及 componentWillUpdate 三个周期函数
    * @description 组件将要更新
    */
-  public componentWillUpdate(nextProps: any, nextState: State) {
-    console.log("Sidebar componentWillUpdate-props", this.props, nextProps);
-  }
+  // public componentWillUpdate(nextProps: any, nextState: State) {
+  //   console.log("Sidebar componentWillUpdate-props", this.props, nextProps);
+  // }
 
   /**
    * @description 菜单项被选中时调用
@@ -58,6 +65,7 @@ class Sidebar extends React.PureComponent<any, State> {
    */
   public onOpenChange = (openKeys: string[]) => {
     let resultOpenKeys: string[] = [];
+    console.log(this.rootSubmenuKeys);
 
     // 判断菜单栏折叠后鼠标hover是否移出菜单，若移出：openKeys为空数组
     if (openKeys.length > 0) {

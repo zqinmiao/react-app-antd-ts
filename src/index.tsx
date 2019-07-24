@@ -1,3 +1,4 @@
+import 'antd/dist/antd.css';
 import NProgress from "nprogress"; // progress bar
 import "nprogress/nprogress.css"; // progress bar style
 import Exception from "pages/exception/index";
