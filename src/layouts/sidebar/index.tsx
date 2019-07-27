@@ -3,9 +3,10 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { toggleMenuOpen, toggleMenuSelect } from "redux/actions/app";
-import { IRoutes } from "types/index";
+import { IRoutes, IStoreState } from "types/index";
 // import SearchMenu from "./search-menu";
 import SidebarLogo from "./sidebar-logo";
+import "./style.scss";
 
 const { Sider } = Layout;
 const { SubMenu } = Menu;
@@ -16,11 +17,20 @@ const initialState = {
 };
 type State = Readonly<typeof initialState>;
 
-class Sidebar extends React.PureComponent<any, State> {
+interface IProps {
+  openKeys: string[];
+  routes: IRoutes[];
+  collapsed: boolean;
+  selectedKeys: string[];
+  toggleMenuOpen(openKeys: string[]): any;
+  toggleMenuSelect(selectedKeys: string[]): any;
+}
+
+class Sidebar extends React.PureComponent<IProps, State> {
   public readonly state: State = initialState;
   public rootSubmenuKeys: string[] = [];
 
-  constructor(props:any){
+  constructor(props: IProps) {
     super(props);
   // 获取根Submenu的key
     this.rootSubmenuKeys = this.props.routes.map(
@@ -178,7 +188,16 @@ class Sidebar extends React.PureComponent<any, State> {
   }
 }
 
+function mapStateToProps({ app }: { app: IStoreState }) {
+  return {
+    openKeys: app.openKeys,
+    routes: app.routes,
+    selectedKeys: app.selectedKeys,
+    collapsed: app.collapsed
+  };
+}
+
 export default connect(
-  null,
+  mapStateToProps,
   { toggleMenuSelect, toggleMenuOpen }
 )(Sidebar);

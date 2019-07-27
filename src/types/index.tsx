@@ -20,7 +20,7 @@ export interface IRoutes {
 }
 
 // 全部路由映射
-export interface IBreadcrumbMap {
+export interface IRouteMap {
   [propName: string]: IRoutes;
 }
 
@@ -36,8 +36,8 @@ export interface IStoreState {
   extractAllRoutes: IRoutes[];
   extractFilterRoutes: IRoutes[];
   searchSidebar: IRoutes[];
-  breadcrumbMap: IBreadcrumbMap;
-  realRouteMap: IBreadcrumbMap;
+  breadcrumbMap: IRouteMap;
+  realRouteMap: IRouteMap;
   collapsed: boolean;
   selectedKeys: string[];
   openKeys: string[];

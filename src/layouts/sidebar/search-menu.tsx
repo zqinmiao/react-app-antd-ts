@@ -26,7 +26,7 @@ class SearchMenu extends React.PureComponent<any, State> {
   // 无嵌套关系的所有路由list
   public routes = [];
 
-  constructor(props:any){
+  constructor(props: any) {
     super(props);
     this.routes = this.props.searchSidebar;
   }

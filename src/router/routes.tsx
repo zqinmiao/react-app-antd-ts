@@ -5,13 +5,20 @@
  * @description: 路由配置信息，路由地址不要以“／”结尾
  */
 
+/**
+ * import asyncComponent from "components/async-component"
+ * 现在的代码分割方法
+ */
+import loadable from "@loadable/component";
 import Loading from "components/loading";
 import * as React from "react";
-import Loadable from "react-loadable";
+
+// 之前的代码分割方法
+import Loadable2 from "react-loadable";
 import { IRoutes } from "types/index";
 
 // Code Splitting lazy loaded
-const About = Loadable({
+const About = Loadable2({
   loader: () => import("pages/about"),
   loading: Loading
 });
@@ -19,10 +26,18 @@ const About = Loadable({
 import Index from "pages/index";
 import User from "pages/user";
 
-const Data = Loadable({
-  loader: () => import("pages/data"),
-  loading: Loading
-});
+// 之前的代码分割方法
+// const Data = Loadable2({
+//   loader: () => import("pages/data"),
+//   loading: Loading
+// });
+
+const Data = loadable(() => import("pages/data"));
+
+// const Data = asyncComponent(() => import("pages/data"));
+
+// import Data from "pages/data";
+// const Data = React.lazy(() => import('pages/data'));
 
 function activity() {
   return <h3>activity</h3>;

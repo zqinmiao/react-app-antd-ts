@@ -5,7 +5,7 @@
  * @description: 侧边栏相关的方法
  */
 import pathToRegexp from "path-to-regexp";
-import { IBreadcrumbMap, IRoutes } from "types/index";
+import { IRouteMap, IRoutes } from "types/index";
 
 /**
  * @description 默认匹配菜单的第一个
@@ -46,18 +46,18 @@ export const matchOpenKeys = (selectedKey: string): string[] => {
  */
 export const matchParamsPath = (
   pathname: string,
-  breadcrumbMap: IBreadcrumbMap
+  routeMap: IRouteMap
 ): IRoutes => {
-  const pathKey: string | undefined = Object.keys(breadcrumbMap).find(key =>
+  const pathKey: string | undefined = Object.keys(routeMap).find(key =>
     pathToRegexp(key).test(pathname)
   );
-  return breadcrumbMap[`${pathKey}`];
+  return routeMap[`${pathKey}`];
 };
 
 // 获取选中的菜单和展开的菜单项
 export const getMenuSelectedAndOpenKeys = (
   extractFilterRoutes: IRoutes[],
-  breadcrumbMap: IBreadcrumbMap
+  breadcrumbMap: IRouteMap
 ) => {
   // 输入的地址
   const pathname = location.pathname;

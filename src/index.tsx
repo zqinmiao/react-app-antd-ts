@@ -1,15 +1,15 @@
-import 'antd/dist/antd.css';
 import NProgress from "nprogress"; // progress bar
 import "nprogress/nprogress.css"; // progress bar style
 import Exception from "pages/exception/index";
 import * as React from "react";
+import "react-app-polyfill/stable";
 import * as ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import store from "redux/store";
 import { getUserInfo } from "services/api";
 import routes from "src/router/routes";
 import "src/styles/index.scss";
-import { IBreadcrumbMap, IRoutes } from "types/index";
+import { IRouteMap, IRoutes } from "types/index";
 import { getToken } from "utils/auth";
 import { extractRoute, getMenuSelectedAndOpenKeys } from "utils/sidebar";
 import App from "./App";
@@ -32,7 +32,6 @@ beforeRender()
     );
   })
   .catch(err => {
-    console.log(err);
     ReactDOM.render(
       <Exception title="" desc="服务器出了点小差错，请等会再来" />,
       document.getElementById("root") as HTMLElement
@@ -69,7 +68,7 @@ async function beforeRender() {
   const extractAllRoutes = extractRouteMap.all;
   // 根据全部展开的路由来获取面包屑映射
   const breadcrumbMap = extractAllRoutes.reduce(
-    (obj: IBreadcrumbMap, item: IRoutes): IBreadcrumbMap => {
+    (obj: IRouteMap, item: IRoutes): IRouteMap => {
       const key = item.path;
       return { ...obj, [`${key}`]: item };
     },
@@ -78,7 +77,7 @@ async function beforeRender() {
   const extractFilterRoutes = extractRouteMap.filter;
   // 可跳转的路由映射
   const realRouteMap = extractFilterRoutes.reduce(
-    (obj: IBreadcrumbMap, item: IRoutes): IBreadcrumbMap => {
+    (obj: IRouteMap, item: IRoutes): IRouteMap => {
       const key = item.path;
       return { ...obj, [`${key}`]: item };
     },

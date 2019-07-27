@@ -2,8 +2,10 @@ import { Avatar, Dropdown, Icon, Layout, Menu, Modal } from "antd";
 import * as React from "react";
 import { connect } from "react-redux";
 import { toggleCollapseds } from "redux/actions/app";
+import { IRoutes, IStoreState } from "types/index";
 import { removeToken } from "utils/auth";
-import BreadcrumbWrapper from "./breadcrumb";
+import Breadcrumb from "./breadcrumb";
+import "./style.scss";
 
 const { Header } = Layout;
 const confirm = Modal.confirm;
@@ -30,7 +32,13 @@ const menu = (
   </Menu>
 );
 
-class HeaderTop extends React.PureComponent<any> {
+interface IProps {
+  collapsed: boolean;
+  userInfo: any;
+  toggleCollapseds(collapsed: boolean): any;
+}
+
+class HeaderWrapper extends React.PureComponent<IProps> {
   // 控制sidebar展开收缩
   public toggleCollapseds = () => {
     this.props.toggleCollapseds(!this.props.collapsed);
@@ -45,15 +53,14 @@ class HeaderTop extends React.PureComponent<any> {
           background: "#fff",
           padding: 0,
           borderBottom: "1px solid #e6e6e6"
-        }}
-      >
+        }}>
         <div className="clearfix">
           <Icon
             className="trigger"
             type={this.props.collapsed ? "menu-unfold" : "menu-fold"}
             onClick={this.toggleCollapseds}
           />
-          <BreadcrumbWrapper {...this.props} />
+          <Breadcrumb {...this.props} />
           <Dropdown className="dropdown" overlay={menu} trigger={["click"]}>
             <span className="ant-dropdown-link" style={{ cursor: "pointer" }}>
               <Avatar
@@ -72,6 +79,11 @@ class HeaderTop extends React.PureComponent<any> {
 }
 
 export default connect(
-  null,
+  ({ app }: { app: IStoreState }) => {
+    return {
+      userInfo: app.userInfo,
+      collapsed: app.collapsed
+    };
+  },
   { toggleCollapseds }
-)(HeaderTop);
+)(HeaderWrapper);
