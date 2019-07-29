@@ -8,9 +8,9 @@ import { Provider } from "react-redux";
 import store from "redux/store";
 import { getUserInfo } from "services/api";
 import routes from "src/router/routes";
+import pathToRegexp from "path-to-regexp";
 import "src/styles/index.scss";
 import { IRouteMap, IRoutes } from "types/index";
-import { getToken } from "utils/auth";
 import { extractRoute, getMenuSelectedAndOpenKeys } from "utils/sidebar";
 import App from "./App";
 
@@ -47,21 +47,21 @@ beforeRender()
 async function beforeRender() {
   let isLogin = false;
   let userInfo = null;
-  const filterPathname = location.pathname.replace(/\/$/, "");
-  if (filterPathname !== "/login" && getToken()) {
-    const {
-      data: {
-        code,
-        result: { name, id }
-      }
-    } = await getUserInfo(true);
-    if (code === 0) {
-      isLogin = true;
-      userInfo = {
-        name,
-        id
-      };
+  if (pathToRegexp(location.pathname).test("/login/")) {
+    return;
+  }
+  const {
+    data: {
+      code,
+      result: { name, id }
     }
+  } = await getUserInfo(true);
+  if (code === 0) {
+    isLogin = true;
+    userInfo = {
+      name,
+      id
+    };
   }
 
   const extractRouteMap = extractRoute(routes, [], [], []);

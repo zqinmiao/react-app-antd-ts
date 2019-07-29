@@ -7,7 +7,6 @@ import { connect } from "react-redux";
 import {
   Redirect,
   Route,
-  RouteProps,
   RouteComponentProps,
   Switch,
   withRouter

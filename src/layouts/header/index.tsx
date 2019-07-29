@@ -2,7 +2,7 @@ import { Avatar, Dropdown, Icon, Layout, Menu, Modal } from "antd";
 import * as React from "react";
 import { connect } from "react-redux";
 import { toggleCollapseds } from "redux/actions/app";
-import { IRoutes, IStoreState } from "types/index";
+import { IStoreState } from "types/index";
 import { removeToken } from "utils/auth";
 import Breadcrumb from "./breadcrumb";
 import "./style.scss";

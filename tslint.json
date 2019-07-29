@@ -1,10 +1,11 @@
 {
   "extends": ["tslint:recommended", "tslint-react", "tslint-config-prettier"],
-  "rules":{
-    "no-console":false,
-    "no-debugger":false,
-    "indent":[true, "spaces"], // 缩进
-    "no-consecutive-blank-lines": [// 空行不超过两行
+  "rules": {
+    "no-console": false,
+    "no-debugger": false,
+    "indent": [true, "spaces"], // 缩进
+    "no-consecutive-blank-lines": [
+      // 空行不超过两行
       true,
       2
     ],
@@ -28,16 +29,14 @@
     // 检查对象中键的排序
     "object-literal-sort-keys": false,
     // 导入源必须按字母顺序排列
-    "ordered-imports": false
+    "ordered-imports": false,
+    "max-classes-per-file": [true, 2]
     // 禁止在项目的package.json中导入未列为依赖项的模块
     // "no-implicit-dependencies":["optional",["src"]],
     // 禁止导入任何子模块。
     // "no-submodule-imports":[true,"src"]
   },
   "linterOptions": {
-    "exclude": [
-      "config/**/*.js",
-      "node_modules/**/*.ts"
-    ]
+    "exclude": ["config/**/*.js", "node_modules/**/*.ts"]
   }
 }

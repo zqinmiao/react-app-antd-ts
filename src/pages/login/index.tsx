@@ -2,7 +2,7 @@ import { Button, Col, Form, Icon, Input } from "antd";
 import { FormComponentProps } from "antd/lib/form";
 import logo from "assets/logo.svg";
 import * as React from "react";
-import Particles from "react-particles-js";
+// import Particles from "react-particles-js";
 import { login } from "services/api";
 import { setToken } from "utils/auth";
 import "./style.scss";
@@ -66,7 +66,7 @@ class Login extends React.PureComponent<FormComponentProps> {
     const { getFieldDecorator } = this.props.form;
     return (
       <div className="login-wrapper">
-        <Particles
+        {/* <Particles
           params={{
             particles: {
               color: {
@@ -82,7 +82,7 @@ class Login extends React.PureComponent<FormComponentProps> {
             }
           }}
           style={{ position: "absolute" }}
-        />
+        /> */}
         <div className="login-top">
           <div className="login-top_logo">
             <img src={logo} className="logo" alt="logo" />
@@ -130,8 +130,7 @@ class Login extends React.PureComponent<FormComponentProps> {
               loading={this.state.loading}
               type="primary"
               htmlType="submit"
-              className="login-form-button"
-            >
+              className="login-form-button">
               登 录
             </Button>
           </FormItem>
