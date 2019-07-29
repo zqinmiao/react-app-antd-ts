@@ -4,7 +4,7 @@ import logo from "assets/logo.svg";
 import * as React from "react";
 // import Particles from "react-particles-js";
 import { login } from "services/api";
-import { setToken } from "utils/auth";
+import { setToken, setStore } from "utils/auth";
 import "./style.scss";
 
 const FormItem = Form.Item;
@@ -19,7 +19,7 @@ class Login extends React.PureComponent<FormComponentProps> {
   };
 
   // 提交
-  public handleSubmit = (e: React.SyntheticEvent<HTMLInputElement>) => {
+  public handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     this.props.form.validateFields(
       (err, { userName, password, validateCode }): void => {
@@ -41,6 +41,10 @@ class Login extends React.PureComponent<FormComponentProps> {
               const { code } = res.data;
               if (code === 0) {
                 setToken("token");
+                setStore("userInfo", {
+                  id: 1,
+                  name: "Super Admin"
+                });
                 window.location.href = "/";
               } else {
                 this.refresh();

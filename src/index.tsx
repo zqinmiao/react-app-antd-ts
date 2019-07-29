@@ -6,11 +6,12 @@ import "react-app-polyfill/stable";
 import * as ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import store from "redux/store";
-import { getUserInfo } from "services/api";
+// import { getUserInfo } from "services/api";
 import routes from "src/router/routes";
 import pathToRegexp from "path-to-regexp";
 import "src/styles/index.scss";
 import { IRouteMap, IRoutes } from "types/index";
+import { getToken, getStore } from "utils/auth";
 import { extractRoute, getMenuSelectedAndOpenKeys } from "utils/sidebar";
 import App from "./App";
 
@@ -50,18 +51,13 @@ async function beforeRender() {
   if (pathToRegexp(location.pathname).test("/login/")) {
     return;
   }
-  const {
-    data: {
-      code,
-      result: { name, id }
-    }
-  } = await getUserInfo(true);
-  if (code === 0) {
+
+  if (getToken() && getStore("userInfo")) {
     isLogin = true;
-    userInfo = {
-      name,
-      id
-    };
+    const info = getStore("userInfo") || null;
+    userInfo = info;
+  }else {
+    return;
   }
 
   const extractRouteMap = extractRoute(routes, [], [], []);
