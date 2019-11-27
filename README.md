@@ -1,5 +1,5 @@
 # react-app-antd-ts
-Based on create-react-app-typescript. Create React apps using antd+typescript.
+Based on [create-react-app-typescript](https://github.com/wmonk/create-react-app-typescript). Create React apps using redux+antd+typescript. Linter is TSLint.
 
 ## file alias
 tsconfig.json，For Example：
