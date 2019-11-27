@@ -1,24 +1,6 @@
 # react-app-antd-ts
 Based on create-react-app-typescript. Create React apps using antd+typescript.
 
-
-## vscode config
-* vscode extension： Prettier、tslint
-* open settings.json edit
-
-```
-"tslint.autoFixOnSave": true,
-  "[scss]": {
-    "editor.formatOnSave": true
-  },
-  "[typescriptreact]": {
-    "editor.formatOnSave": true
-  },
-  "[typescript]": {
-    "editor.formatOnSave": true
-  }
-```
-
 ## file alias
 tsconfig.json，For Example：
 
