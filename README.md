@@ -7,23 +7,6 @@
 [参考UmiJS官方文档](https://umijs.org/zh/)
 
 
-## vscode 配置
-* vscode 插件： Prettier、tslint
-* 打开 settings.json 编辑
-
-```
-"tslint.autoFixOnSave": true,
-  "[scss]": {
-    "editor.formatOnSave": true
-  },
-  "[typescriptreact]": {
-    "editor.formatOnSave": true
-  },
-  "[typescript]": {
-    "editor.formatOnSave": true
-  }
-```
-
 ## 文件别名
 tsconfig.json，如下：
 
