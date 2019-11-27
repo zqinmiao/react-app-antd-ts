@@ -43,7 +43,11 @@ class BreadcrumbWrapper extends React.PureComponent<any> {
           }
           return (
             <Breadcrumb.Item key={index}>
-              <Link to={path}>{this.props.breadcrumbMap[path].title}</Link>
+              {
+                this.props.breadcrumbMap[path].children ? 
+                this.props.breadcrumbMap[path].title :
+                <Link to={path}>{this.props.breadcrumbMap[path].title}</Link>
+              }
             </Breadcrumb.Item>
           );
         })}

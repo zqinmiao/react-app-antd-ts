@@ -58,23 +58,8 @@ class Layouts extends React.PureComponent<IProps> {
           }
         });
 
-        // 重新整理嵌套路由，将无组件的嵌套去除
         if (existComponent.length > 0) {
-          const routeMap = existComponent.reduceRight(
-            (obj: IRoutes, item: IRoutes, index: number) => {
-              if (existComponent.length - 1 === index) {
-                obj = item;
-                return { ...obj };
-              }
-              return { ...item, ...{ routes: [obj] } };
-            },
-            {
-              title: "",
-              path: "",
-              component: null
-            }
-          );
-          renderRoute = <RouteWithSubRoutes {...routeMap} />;
+          renderRoute = existComponent.map((route) => <RouteWithSubRoutes key={route.path} {...route} />);
         }
       } else {
         // 处理根域、login情况

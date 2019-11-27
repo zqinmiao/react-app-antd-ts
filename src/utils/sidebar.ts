@@ -13,8 +13,8 @@ import { IRouteMap, IRoutes } from "types/index";
  * @param keys 菜单的key值的列表
  */
 const matchSelectedSidebar = (route: IRoutes, key = "/"): string => {
-  if (route.routes && route.routes.length > 0) {
-    const list = route.routes;
+  if (route.children && route.children.length > 0) {
+    const list = route.children;
     key = list[0].path;
     matchSelectedSidebar(list[0], key);
   }
@@ -99,11 +99,11 @@ export const extractRoute = (
 ): IExtractRouteReturn => {
   routeList.forEach(
     (route: IRoutes, index: number): void | IExtractRouteReturn => {
-      if (route.routes && route.routes.length > 0) {
+      if (route.children && route.children.length > 0) {
         all.push({
           ...route
         });
-        return extractRoute(route.routes, all, filter, searchSidebar);
+        return extractRoute(route.children, all, filter, searchSidebar);
       } else {
         all.push({
           ...route

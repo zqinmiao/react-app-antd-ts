@@ -56,6 +56,42 @@ class Sidebar extends React.PureComponent<IProps, State> {
   // }
 
   /**
+   * 渲染menu
+   * 
+   */
+  public renderMenu = (routes: IRoutes[]): any => {
+    return routes.map((route: IRoutes, index: number) => {
+      if (route.noSidebar) {
+        return null;
+      }
+      if (route.children && route.children.length > 0 ) {
+        return (
+          <SubMenu
+            key={`${route.path}`}
+            title={
+              <span title={route.title}>
+                <Icon type={route.icon} />
+                {this.props.collapsed ? "" : route.title}
+              </span>
+            }
+          >
+            {this.renderMenu(route.children)}
+          </SubMenu>
+        );
+      }
+      return (
+        <Menu.Item key={`${route.path}`}>
+          <span>
+            <Icon type={route.icon} />
+            {this.props.collapsed ? "" : route.title}
+          </span>
+          <Link title={route.title} to={route.path}>{route.title}</Link>
+        </Menu.Item>
+      );
+    })
+  };
+
+  /**
    * @description 菜单项被选中时调用
    */
   public onSelect = ({
@@ -120,68 +156,7 @@ class Sidebar extends React.PureComponent<IProps, State> {
           openKeys={this.props.openKeys}
           selectedKeys={this.props.selectedKeys}
         >
-          {this.props.routes.map((ele: IRoutes, index: number) => {
-            if (!ele.routes) {
-              return (
-                <Menu.Item key={`${ele.path}`}>
-                  <span>
-                    <Icon type={ele.icon} />
-                    {this.props.collapsed ? "" : ele.title}
-                  </span>
-                  <Link to={ele.path}>{ele.title}</Link>
-                </Menu.Item>
-              );
-            }
-            return (
-              <SubMenu
-                key={`${ele.path}`}
-                title={
-                  <span>
-                    <Icon type={ele.icon} />
-                    {this.props.collapsed ? "" : ele.title}
-                  </span>
-                }
-              >
-                {ele.routes.map((sele: IRoutes, sindex: number) => {
-                  let subMenu;
-                  if (sele.routes && sele.routes.length) {
-                    subMenu = (
-                      <SubMenu
-                        key={`${sele.path}`}
-                        title={
-                          <span>
-                            <Icon type={sele.icon} />
-                            {sele.title}
-                          </span>
-                        }
-                      >
-                        {sele.routes.map((mele: IRoutes, mindex: number) => {
-                          return mele.noSidebar ? null : (
-                            <Menu.Item key={`${mele.path}`}>
-                              <Link to={mele.path}>{mele.title}</Link>
-                            </Menu.Item>
-                          );
-                        })}
-                      </SubMenu>
-                    );
-                  } else {
-                    if (!sele.noSidebar) {
-                      subMenu = (
-                        <Menu.Item key={`${sele.path}`}>
-                          <span>
-                            <Icon type={sele.icon} />
-                            {sele.title}
-                          </span>
-                          <Link to={sele.path}>{sele.title}</Link>
-                        </Menu.Item>
-                      );
-                    }
-                  }
-                  return subMenu;
-                })}
-              </SubMenu>
-            );
-          })}
+          {this.renderMenu(this.props.routes)}
         </Menu>
       </Sider>
     );

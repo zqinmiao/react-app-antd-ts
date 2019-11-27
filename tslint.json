@@ -31,6 +31,7 @@
     // 导入源必须按字母顺序排列
     "ordered-imports": false,
     "max-classes-per-file": [true, 2]
+    // "member-ordering": false,
     // 禁止在项目的package.json中导入未列为依赖项的模块
     // "no-implicit-dependencies":["optional",["src"]],
     // 禁止导入任何子模块。

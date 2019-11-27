@@ -5,39 +5,28 @@
  * @description: 路由配置信息，路由地址不要以“／”结尾
  */
 
-/**
- * import asyncComponent from "components/async-component"
- * 现在的代码分割方法
- */
-import loadable from "@loadable/component";
 import Loading from "components/loading";
 import * as React from "react";
-
+import { IRoutes } from "types/index";
+import Wrapper from "./nest-wrapper";
 // 之前的代码分割方法
 import Loadable2 from "react-loadable";
-import { IRoutes } from "types/index";
+// 现在的代码分割方法
+import loadable from "@loadable/component";
 
-// Code Splitting lazy loaded
+
 const About = Loadable2({
   loader: () => import("pages/about"),
   loading: Loading
 });
-
+const Data = loadable(() => import("pages/data"));
+const dynamicRoute = loadable(() => import("pages/dynamic-route"));
 import Index from "pages/index";
 import User from "pages/user";
 
-// 之前的代码分割方法
-// const Data = Loadable2({
-//   loader: () => import("pages/data"),
-//   loading: Loading
-// });
-
-const Data = loadable(() => import("pages/data"));
-
-// const Data = asyncComponent(() => import("pages/data"));
-
-// import Data from "pages/data";
-// const Data = React.lazy(() => import('pages/data'));
+function account() {
+  return <h3>account</h3>;
+}
 
 function activity() {
   return <h3>activity</h3>;
@@ -63,70 +52,90 @@ const routes: IRoutes[] = [
     path: "/index",
     component: Index
   },
+
   {
-    title: "关于",
+    title: "普通一级菜单",
     icon: "eye",
-    path: "/about",
+    path: "/common-level",
+    exact: true,
     component: About
   },
   {
-    title: "用户",
-    icon: "user",
-    path: "/user",
-    component: User,
-    routes: [
+    title: "一级—非嵌套子级",
+    icon: "bulb",
+    path: "/common-level/no-nest-sub",
+    component: account
+  },
+
+  {
+    title: "二级菜单",
+    icon: "setting",
+    path: "/two-level",
+    children: [
       {
-        title: "用户数据",
-        icon: "appstore",
-        path: "/user/data",
-        routes: [
-          {
-            title: "用户数据",
-            icon: "appstore",
-            path: "/user/data/index",
-            component: Data
-          },
-          {
-            title: "用户行为",
-            icon: "appstore",
-            noSidebar: true,
-            path: "/user/data/activity",
-            component: activity
-          }
-        ]
-      },
-      {
-        title: "关于用户",
-        icon: "appstore",
-        path: "/user/about",
-        component: About
+        title: "子菜单",
+        icon: "setting",
+        path: "/two-level/sub",
+        component: Setting
       }
     ]
   },
+
   {
-    title: "设置",
-    icon: "setting",
-    path: "/setting",
-    component: Setting
-  },
-  {
-    title: "表单",
-    icon: "form",
-    path: "/form",
-    routes: [
+    title: "三级—父级都有component",
+    icon: "user",
+    path: "/three-level-commonent",
+    component: User,
+    children: [
       {
-        title: "列表",
-        icon: "bars",
-        path: "/form/list",
-        routes: [
+        title: "子菜单",
+        icon: "appstore",
+        path: "/three-level-commonent/sub",
+        component: Wrapper,
+        children: [
           {
-            title: "有序列表",
-            path: "/form/list/orderly",
+            title: "孙子菜单-one",
+            icon: "appstore",
+            path: "/three-level-commonent/sub/one",
+            component: Data
+          },
+          {
+            title: "孙子菜单-two",
+            icon: "appstore",
+            noSidebar: true,
+            path: "/three-level-commonent/sub/two",
+            component: activity
+          },
+          {
+            title: "孙子菜单-动态路由",
+            icon: "appstore",
+            noSidebar: true,
+            path: "/three-level-commonent/:id",
+            component: dynamicRoute
+          }
+        ]
+      }
+    ]
+  },
+
+  {
+    title: "三级—父级都无component",
+    icon: "form",
+    path: "/three-level-no-commonent",
+    children: [
+      {
+        title: "子菜单",
+        icon: "bars",
+        path: "/three-level-no-commonent/sub",
+        children: [
+          {
+            title: "孙子菜单-one",
+            path: "/three-level-no-commonent/sub/one",
             component: orderly
           },
           {
-            title: "无序列表",
-            path: "/form/list/unordered",
+            title: "孙子菜单-two",
+            path: "/three-level-no-commonent/sub/two",
             component: unordered
           }
         ]
@@ -134,4 +143,5 @@ const routes: IRoutes[] = [
     ]
   }
 ];
+
 export default routes;

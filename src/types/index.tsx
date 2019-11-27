@@ -16,7 +16,7 @@ export interface IRoutes {
   strict?: boolean;
   noSidebar?: boolean;
   component?: any;
-  routes?: IRoutes[];
+  children?: IRoutes[];
 }
 
 // 全部路由映射
