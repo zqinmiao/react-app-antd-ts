@@ -1,5 +1,5 @@
 # react-app-antd-ts
-基于 [Create React App Adding TypeScript](https://facebook.github.io/create-react-app/docs/adding-typescript)， 使用redux+antd+typescript创建React应用。
+基于 [Create React App Adding TypeScript](https://facebook.github.io/create-react-app/docs/adding-typescript)， 使用redux+antd+typescript创建React应用。使用TSLint作为项目linter。
 
 __ps:__ 基于umi脚手架创建，[参考react-app-umi-antd-ts](https://github.com/zqinmiao/react-app-antd-ts/tree/umi-antd-typesrcipt)
 
@@ -45,6 +45,8 @@ router 配置文件```src/router/routes.tsx```，路由地址不要以 "/" 结�
 },
 ```
 
-```/common-level```对应：```普通一级菜单```,```/common-level/no-nest-sub```对应：```一级—非嵌套子级```,最终面包屑渲染的层级为：```普通一级菜单/一级—非嵌套子级```,且```普通一级菜单```可点。
+* ```/common-level```对应：```普通一级菜单```，```/common-level/no-nest-sub```对应：```一级—非嵌套子级```。
+
+* ```一级—非嵌套子级```所在页面的面包屑渲染的层级为：```普通一级菜单/一级—非嵌套子级```，且```普通一级菜单```可点。
 
 
