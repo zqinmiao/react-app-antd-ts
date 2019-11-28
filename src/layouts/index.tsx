@@ -17,7 +17,7 @@ import { matchParamsPath } from "utils/sidebar";
 import Header from "./header";
 import Sidebar from "./sidebar/index";
 
-import "src/layouts/style.scss";
+import "src/layouts/style";
 
 interface IProps extends RouteComponentProps {
   isLogin: boolean;

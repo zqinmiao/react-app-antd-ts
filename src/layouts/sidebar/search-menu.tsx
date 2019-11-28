@@ -1,7 +1,7 @@
 import { Select } from "antd";
 import * as React from "react";
 import { connect } from "react-redux";
-import { toggleMenuSelect } from "redux/actions/app";
+import { toggleMenuSelect } from "src/redux/actions/app";
 import { IRoutes } from "types/index";
 
 const Option = Select.Option;

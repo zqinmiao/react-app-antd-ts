@@ -5,7 +5,7 @@ import * as React from "react";
 // import Particles from "react-particles-js";
 import { login } from "services/api";
 import { setToken, setStore } from "utils/auth";
-import "./style.scss";
+import "./style";
 
 const FormItem = Form.Item;
 

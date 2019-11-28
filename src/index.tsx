@@ -5,11 +5,11 @@ import * as React from "react";
 import "react-app-polyfill/stable";
 import * as ReactDOM from "react-dom";
 import { Provider } from "react-redux";
-import store from "redux/store";
+import store from "src/redux/store";
 // import { getUserInfo } from "services/api";
 import routes from "src/router/routes";
-import pathToRegexp from "path-to-regexp";
-import "src/styles/index.scss";
+import { pathToRegexp } from "path-to-regexp";
+import "src/styles/index";
 import { IRouteMap, IRoutes } from "types/index";
 import { getToken, getStore } from "utils/auth";
 import { extractRoute, getMenuSelectedAndOpenKeys } from "utils/sidebar";
@@ -18,7 +18,7 @@ import App from "./App";
 // mock数据
 import "./mock/index";
 
-import * as serviceWorker from "./serviceWorker";
+// import * as serviceWorker from "./serviceWorker";
 
 NProgress.configure({ showSpinner: false });
 NProgress.start();
@@ -32,7 +32,7 @@ beforeRender()
       document.getElementById("root") as HTMLElement
     );
   })
-  .catch(err => {
+  .catch(() => {
     ReactDOM.render(
       <Exception title="" desc="服务器出了点小差错，请等会再来" />,
       document.getElementById("root") as HTMLElement
@@ -108,4 +108,4 @@ async function beforeRender() {
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: http://bit.ly/CRA-PWA
-serviceWorker.unregister();
+// serviceWorker.unregister();

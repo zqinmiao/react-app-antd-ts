@@ -1,5 +1,5 @@
 import { Breadcrumb } from "antd";
-import pathToRegexp from "path-to-regexp";
+import {pathToRegexp} from "path-to-regexp";
 import * as React from "react";
 import { Link } from "react-router-dom";
 import { matchParamsPath } from "utils/sidebar";

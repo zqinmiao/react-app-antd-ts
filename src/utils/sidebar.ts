@@ -4,7 +4,7 @@
  * @Last Modified by:   mark.zhang
  * @description: 侧边栏相关的方法
  */
-import pathToRegexp from "path-to-regexp";
+import {pathToRegexp} from "path-to-regexp";
 import { IRouteMap, IRoutes } from "types/index";
 
 /**
@@ -12,7 +12,7 @@ import { IRouteMap, IRoutes } from "types/index";
  * @param route 路由项
  * @param keys 菜单的key值的列表
  */
-const matchSelectedSidebar = (route: IRoutes, key = "/"): string => {
+export const matchSelectedSidebar = (route: IRoutes, key = "/"): string => {
   if (route.children && route.children.length > 0) {
     const list = route.children;
     key = list[0].path;
@@ -98,7 +98,7 @@ export const extractRoute = (
   searchSidebar: IRoutes[]
 ): IExtractRouteReturn => {
   routeList.forEach(
-    (route: IRoutes, index: number): void | IExtractRouteReturn => {
+    (route: IRoutes): void | IExtractRouteReturn => {
       if (route.children && route.children.length > 0) {
         all.push({
           ...route

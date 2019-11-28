@@ -1,9 +1,9 @@
 import { Button } from "antd";
 import satellite from "assets/404.svg";
 import * as React from "react";
-import "./style.scss";
+import "./style";
 
-export default ({
+const exeception = ({
   title,
   desc,
   showAction
@@ -34,3 +34,5 @@ export default ({
     </div>
   );
 };
+
+export default exeception;

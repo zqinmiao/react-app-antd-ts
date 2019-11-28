@@ -1,31 +1,67 @@
 {
+  // http://www.typescriptlang.org/docs/handbook/compiler-options.html
   "compilerOptions": {
-    "baseUrl": ".",
+    "baseUrl": "./",
+    "outDir": "./dist/",
     "paths": {
       "src/*": ["src/*"],
       "components/*": ["src/components/*"],
       "pages/*": ["src/pages/*"],
       "utils/*": ["src/utils/*"],
-      "redux/*": ["src/redux/*"],
       "services/*": ["src/services/*"],
       "assets/*": ["src/assets/*"],
       "types/*": ["src/types/*"]
     },
+    "lib": [
+      "dom",
+      "es2015",
+      "es2016.array.include"
+    ],
+    // Generates corresponding .map file.
+    "sourceMap": true,
+    // Specify module code generation
+    "module": "ESNext",
+    // Specify ECMAScript target version:
     "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
-    "skipLibCheck": true,
+    // Allow default imports from modules with no default export. This does not affect code emit, just typechecking.
+    // "allowSyntheticDefaultImports": true,
+    // Emit __importStar and __importDefault helpers for runtime babel ecosystem compatibility and enable --allowSyntheticDefaultImports for typesystem compatibility.
     "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
+    // Allow JavaScript files to be compiled.
+    "allowJs": true,
+    // Skip type checking of all declaration files (*.d.ts).
+    "skipLibCheck": true,
+    // Enable all strict type checking options.
+    /**
+    * Enabling --strict enables --noImplicitAny, --noImplicitThis, 
+    * --alwaysStrict, --strictBindCallApply, --strictNullChecks, 
+    * --strictFunctionTypes and --strictPropertyInitialization.
+    */
     "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "module": "esnext",
+    // Raise error on expressions and declarations with an implied any type.
+    "noImplicitAny": true,
+    // Raise error on this expressions with an implied any type.
+    "noImplicitThis": true,
+    // Parse in strict mode and emit "use strict" for each source file
+    "alwaysStrict": true,
+    // Enable stricter checking of the bind, call, and apply methods on functions.
+    "strictBindCallApply": true,
+    // In strict null checking mode, the null and undefined values are not in the domain of every type and are only assignable to themselves and any (the one exception being that undefined is also assignable to void).
+    "strictNullChecks": true,
+    // Disable bivariant parameter checking for function types.
+    "strictFunctionTypes": true,
+    // Ensure non-undefined class properties are initialized in the constructor. This option requires --strictNullChecks be enabled in order to take effect.
+    "strictPropertyInitialization": true,
+    // Determine how modules get resolved. Either "Node" for Node.js/io.js style resolution, or "Classic". See Module Resolution documentation for more details
     "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "preserve",
+    // Include modules imported with .json extension.
+    // "resolveJsonModule": true,
+    // Perform additional checks to ensure that separate compilation (such as with transpileModule or @babel/plugin-transform-typescript) would be safe.
+    // "isolatedModules": true,
+    // Support JSX in .tsx files: "react", "preserve", "react-native". See JSX.
+    // http://www.typescriptlang.org/docs/handbook/jsx.html
+    "jsx": "react",
+    // Report errors on unused locals.
     "noUnusedLocals": true
-  },
-  "include": ["src"]
+  }
 }

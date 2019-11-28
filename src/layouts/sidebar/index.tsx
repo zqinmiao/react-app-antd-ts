@@ -2,11 +2,11 @@ import { Icon, Layout, Menu } from "antd";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import { toggleMenuOpen, toggleMenuSelect } from "redux/actions/app";
+import { toggleMenuOpen, toggleMenuSelect } from "src/redux/actions/app";
 import { IRoutes, IStoreState } from "types/index";
 // import SearchMenu from "./search-menu";
 import SidebarLogo from "./sidebar-logo";
-import "./style.scss";
+import "./style";
 
 const { Sider } = Layout;
 const { SubMenu } = Menu;

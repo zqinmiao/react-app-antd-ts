@@ -25,7 +25,7 @@ export interface IRouteMap {
 }
 
 // react-router match类型
-export interface IMatch extends match<{}> {}
+export type IMatch = match<{}>;
 
 // redux store state
 export interface IStoreState {

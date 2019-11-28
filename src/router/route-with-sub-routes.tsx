@@ -11,6 +11,7 @@ const RouteWithSubRoutes = (route: IRoutes) => {
       render={props => {
         return (
           // pass the sub-routes down to keep nesting
+          // eslint-disable-next-line
           <route.component {...props} children={route.children} />
         );
       }}

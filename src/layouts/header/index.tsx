@@ -1,11 +1,11 @@
 import { Avatar, Dropdown, Icon, Layout, Menu, Modal } from "antd";
 import * as React from "react";
 import { connect } from "react-redux";
-import { toggleCollapseds } from "redux/actions/app";
+import { toggleCollapseds } from "src/redux/actions/app";
 import { IStoreState } from "types/index";
 import { removeToken } from "utils/auth";
 import Breadcrumb from "./breadcrumb";
-import "./style.scss";
+import "./style";
 
 const { Header } = Layout;
 const confirm = Modal.confirm;

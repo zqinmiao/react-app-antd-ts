@@ -1,6 +1,4 @@
-/// <reference types="node" />
-/// <reference types="react" />
-/// <reference types="react-dom" />
+
 
 declare namespace NodeJS {
   interface ProcessEnv {
@@ -54,6 +52,16 @@ declare module '*.module.css' {
 }
 
 declare module '*.module.scss' {
+  const classes: { [key: string]: string };
+  export default classes;
+}
+
+declare module '*.less' {
+  const classes: { [key: string]: string };
+  export default classes;
+}
+
+declare module '*.module.less' {
   const classes: { [key: string]: string };
   export default classes;
 }

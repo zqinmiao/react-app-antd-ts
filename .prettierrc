@@ -1,8 +1,0 @@
-{
-  "proseWrap": "never",
-  "useTabs": false,
-  "tabWidth": 2,
-  "semi": true,
-  "singleQuote": false,
-  "jsxBracketSameLine": true
-}
