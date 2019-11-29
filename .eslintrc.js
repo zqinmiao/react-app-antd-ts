@@ -1,5 +1,16 @@
 const path = require('path');
 
+// 参考：https://cn.eslint.org/docs/user-guide/configuring#disabling-rules-with-inline-comments
+// 禁止规则出现警告
+// 如果在整个文件范围内禁止规则出现警告，将 /* eslint-disable */ 块注释放在文件顶部
+/* eslint-disable */
+
+// 对指定的规则启用或禁用警告
+/* eslint-disable no-alert, no-console */
+/* eslint-enable no-alert, no-console */
+
+// eslint-disable-next-line
+
 module.exports = {
   // Specifies the ESLint parser
   parser: '@typescript-eslint/parser', 
@@ -28,6 +39,8 @@ module.exports = {
     // Require that interface names should or should not prefixed with I	
     "@typescript-eslint/interface-name-prefix": 0,
     // Disallows explicit type declarations for variables or parameters initialized to a number, string, or boolean	
-    "@typescript-eslint/no-inferrable-types": 0
+    "@typescript-eslint/no-inferrable-types": 0,
+    // Disallow usage of the any type	
+    "@typescript-eslint/no-explicit-any": 0
   },
 };

@@ -79,6 +79,7 @@
   "eslintIgnore": [
     "webpack",
     "public",
-    "dist"
+    "dist",
+    "src/mock"
   ]
 }

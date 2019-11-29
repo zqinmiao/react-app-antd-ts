@@ -1,7 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const {CleanWebpackPlugin} = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 // https://github.com/Brooooooklyn/ts-import-plugin
 const tsImportPluginFactory = require('ts-import-plugin')
@@ -72,7 +72,7 @@ module.exports = {
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       filename: path.resolve(__dirname, '../dist/index.html'),
-      favicon: path.resolve(__dirname, '../public/'),
+      favicon: path.resolve(__dirname, '../public/favicon.ico'),
       template: path.resolve(__dirname, '../public/index.html'),
     }),
     // https://github.com/TypeStrong/fork-ts-checker-webpack-plugin#eslint

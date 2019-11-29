@@ -14,11 +14,9 @@ import { IRouteMap, IRoutes } from "types/index";
 import { getToken, getStore } from "utils/auth";
 import { extractRoute, getMenuSelectedAndOpenKeys } from "utils/sidebar";
 import App from "./App";
-
-// mock数据
-import "./mock/index";
-
 // import * as serviceWorker from "./serviceWorker";
+
+import "./mock"
 
 NProgress.configure({ showSpinner: false });
 NProgress.start();
@@ -86,6 +84,8 @@ async function beforeRender() {
   );
   const selectedKeys = [menuSelectedOpen.selectedKey];
   const openKeys = menuSelectedOpen.openKeys;
+
+  console.log(selectedKeys);
   store.dispatch({
     type: "INIT_STATE",
     payload: {

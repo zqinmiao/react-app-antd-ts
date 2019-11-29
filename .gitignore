@@ -11,7 +11,6 @@
 /dist
 
 # config
-/scripts/proxySetting.js
 
 # misc
 .DS_Store

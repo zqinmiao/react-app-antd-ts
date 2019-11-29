@@ -1,10 +1,6 @@
 import Mock from "mockjs";
 
-interface IBody<T> {
-  [propName: string]: T;
-}
-
-Mock.mock(/\/api\/getUserInfo/, <T>({ body }: IBody<T>) => {
+Mock.mock(/\/api\/getUserInfo/, ({ body }) => {
   if (body) {
     return {
       code: 0,
@@ -22,7 +18,7 @@ Mock.mock(/\/api\/getUserInfo/, <T>({ body }: IBody<T>) => {
   }
 });
 
-Mock.mock(/\/api\/login/, <T>({ body }: IBody<T>) => {
+Mock.mock(/\/api\/login/, () => {
   return {
     code: 0,
     result: {},
