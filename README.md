@@ -1,10 +1,10 @@
 # react-app-antd-ts
 基于 [Create React App Adding TypeScript](https://facebook.github.io/create-react-app/docs/adding-typescript)， 使用redux+antd+typescript创建React应用。使用TSLint作为项目linter。
 
-__ps:__ 基于umi脚手架创建，[参考react-app-umi-antd-ts](https://github.com/zqinmiao/react-app-antd-ts/tree/umi-antd-typesrcipt)
+* 基于umi脚手架创建，[在这里](https://github.com/zqinmiao/react-app-antd-ts/tree/umi-antd-typesrcipt)
 
 ## 相关知识
-[react+typescript+antd脚手架搭建](https://github.com/zqinmiao/blog/issues/7)
+[React+TypeScript+Antd+TSLint脚手架搭建](https://github.com/zqinmiao/blog/issues/7)
 
 
 ## 文件别名
