@@ -1,5 +1,10 @@
 const path = require('path');
 
+// git hooks 参考
+// https://github.com/typicode/husky
+// https://github.com/conventional-changelog/commitlint
+// "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+
 // 参考：https://cn.eslint.org/docs/user-guide/configuring#disabling-rules-with-inline-comments
 // 禁止规则出现警告
 // 如果在整个文件范围内禁止规则出现警告，将 /* eslint-disable */ 块注释放在文件顶部
