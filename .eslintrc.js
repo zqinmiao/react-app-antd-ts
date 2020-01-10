@@ -1,3 +1,7 @@
+/**
+ * eslint配置最早参考：https://github.com/TypeStrong/fork-ts-checker-webpack-plugin#eslint
+ */
+
 const path = require('path');
 
 // git hooks 参考
@@ -18,11 +22,12 @@ const path = require('path');
 
 module.exports = {
   // Specifies the ESLint parser
-  parser: '@typescript-eslint/parser', 
+  // https://github.com/typescript-eslint/typescript-eslint/tree/master/packages/parser
+  parser: '@typescript-eslint/parser',
   extends: [
     // Uses the recommended rules from @eslint-plugin-react
     // https://github.com/yannickcr/eslint-plugin-react#list-of-supported-rules
-    'plugin:react/recommended', 
+    'plugin:react/recommended',
     // Uses the recommended rules from the @typescript-eslint/eslint-plugin
     // https://github.com/typescript-eslint/typescript-eslint/tree/master/packages/eslint-plugin#supported-rules
     'plugin:@typescript-eslint/recommended'
@@ -31,9 +36,9 @@ module.exports = {
     project: path.resolve(__dirname, './tsconfig.json'),
     tsconfigRootDir: __dirname,
     // Allows for the parsing of modern ECMAScript features
-    ecmaVersion: 2018, 
+    ecmaVersion: 2018,
     // Allows for the use of imports
-    sourceType: 'module', 
+    sourceType: 'module',
   },
   rules: {
     // Place to specify ESLint rules. Can be used to overwrite rules specified from the extended configs

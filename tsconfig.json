@@ -4,13 +4,27 @@
     "baseUrl": "./",
     "outDir": "./dist/",
     "paths": {
-      "src/*": ["src/*"],
-      "components/*": ["src/components/*"],
-      "pages/*": ["src/pages/*"],
-      "utils/*": ["src/utils/*"],
-      "services/*": ["src/services/*"],
-      "assets/*": ["src/assets/*"],
-      "types/*": ["src/types/*"]
+      "src/*": [
+        "src/*"
+      ],
+      "components/*": [
+        "src/components/*"
+      ],
+      "pages/*": [
+        "src/pages/*"
+      ],
+      "utils/*": [
+        "src/utils/*"
+      ],
+      "services/*": [
+        "src/services/*"
+      ],
+      "assets/*": [
+        "src/assets/*"
+      ],
+      "types/*": [
+        "src/types/*"
+      ]
     },
     "lib": [
       "dom",
@@ -62,6 +76,8 @@
     // http://www.typescriptlang.org/docs/handbook/jsx.html
     "jsx": "react",
     // Report errors on unused locals.
-    "noUnusedLocals": true
+    "noUnusedLocals": true,
+    // Enables experimental support for ES decorators. 开启装饰器语法
+    "experimentalDecorators": true
   }
 }
